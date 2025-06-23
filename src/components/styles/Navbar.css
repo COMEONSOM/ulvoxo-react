@@ -1,0 +1,15 @@
+.navbar {
+  @apply flex justify-between items-center px-6 py-4 bg-black bg-opacity-70 text-white;
+}
+
+.navbar__logo {
+  @apply text-2xl font-bold tracking-wide;
+}
+
+.navbar__links {
+  @apply flex gap-6;
+}
+
+.navbar__links li a {
+  @apply text-sm hover:text-sky-400 transition-colors duration-300;
+}

@@ -1,0 +1,7 @@
+.footer {
+  @apply py-6 text-center bg-black text-gray-400;
+}
+
+.footer__text {
+  @apply text-sm;
+}

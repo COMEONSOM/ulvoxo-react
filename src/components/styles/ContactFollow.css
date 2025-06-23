@@ -1,0 +1,11 @@
+.contact {
+  @apply text-center py-16 bg-gray-900 text-white;
+}
+
+.contact__title {
+  @apply text-3xl font-semibold mb-4;
+}
+
+.contact__text {
+  @apply text-base text-gray-300;
+}
