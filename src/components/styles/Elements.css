@@ -1,0 +1,156 @@
+/* styles/Elements.css */
+
+.elements-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  background: #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.section-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2f7ff;
+  border: 2px solid #0070f3;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex-wrap: wrap;
+}
+
+.section-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 112, 243, 0.15);
+}
+
+.text-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 60%;
+  position: relative;
+}
+
+.section-title-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.bio-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.bio {
+  font-size: 1rem;
+  color: #222;
+  font-weight: 500;
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+/* Emergency blinking animation */
+.emergency-bio::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  animation: pulseAlert 1.5s infinite;
+}
+
+@keyframes pulseAlert {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* NEW Tag Animation */
+.new-tag {
+  position: relative;
+  background: rgb(0, 255, 0);
+  color: white;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: bold;
+  animation: blink 2s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Lottie animation button */
+.lottie-wrap {
+  width: 180px;
+  height: 180px;
+  min-width: 150px;
+  flex-shrink: 0;
+}
+
+.lottie-button {
+  width: 100%;
+  height: 100%;
+
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .text-group {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .bio-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lottie-wrap {
+    width: 140px;
+    height: 140px;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .lottie-wrap {
+    width: 120px;
+    height: 120px;
+  }
+
+  .new-tag {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .bio {
+    font-size: 0.95rem;
+  }
+}

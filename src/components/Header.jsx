@@ -1,73 +1,71 @@
-import "../components/styles/Header.css"; // global import now
-import { useState } from "react";
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { app } from "../lib/firebase";
-
-const auth = getAuth(app);
+import { useState, useEffect } from "react";
+import "./styles/Header.css";
+import LoginModal from "./LoginModal";
+import { auth } from "../lib/firebase";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export default function Header() {
-  const [phone, setPhone] = useState("");
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [confirmation, setConfirmation] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const sendOTP = async () => {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-        size: "invisible",
-        callback: () => {},
-      });
-    }
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user || null);
+    });
+    return unsubscribe;
+  }, []);
 
-    try {
-      const confirmationResult = await signInWithPhoneNumber(auth, "+91" + phone, window.recaptchaVerifier);
-      setConfirmation(confirmationResult);
-      setOtpSent(true);
-      alert("OTP sent to +" + phone);
-    } catch (err) {
-      console.error(err);
-      alert("Failed to send OTP");
-    }
+  const handleLogin = ({ user }) => {
+    setUser(user);
   };
 
-  const verifyOTP = async () => {
-    try {
-      await confirmation.confirm(otp);
-      alert("Login successful!");
-    } catch {
-      alert("Incorrect OTP");
-    }
+  const handleLogout = () => {
+    signOut(auth).then(() => {
+      setUser(null);
+      setShowLogin(false);
+    });
   };
+
+  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "U");
 
   return (
     <header className="header">
       <div className="logo">
-        <h1>OLVOXO</h1>
+        <img src="/assets/logo.png" alt="Ulvoxo Logo" className="logo-img" />
       </div>
-      <div className="login">
-        {!otpSent ? (
-          <div className="loginForm">
-            <input
-              type="tel"
-              placeholder="Enter phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-            />
-            <button onClick={sendOTP}>Send OTP</button>
-          </div>
+
+      <div className="auth-area">
+        {user ? (
+          <button
+            className="profile-button"
+            onClick={() => setShowLogin(true)}
+            aria-label="Open profile menu"
+          >
+            {user.photoURL ? (
+              <img src={user.photoURL} alt="avatar" className="avatar" />
+            ) : (
+              <div className="avatar-fallback">
+                {getInitial(user.displayName)}
+              </div>
+            )}
+          </button>
         ) : (
-          <div className="otpForm">
-            <input
-              type="text"
-              placeholder="Enter OTP"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
-            <button onClick={verifyOTP}>Verify</button>
-          </div>
+          <button
+            className="login-button"
+            onClick={() => setShowLogin(true)}
+            aria-label="Login"
+          >
+            Login
+          </button>
         )}
-        <div id="recaptcha-container"></div>
       </div>
+
+      {showLogin && (
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onLogin={handleLogin}
+        />
+      )}
     </header>
   );
 }

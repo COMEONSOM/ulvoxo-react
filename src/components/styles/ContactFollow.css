@@ -1,11 +1,146 @@
-.contact {
-  @apply text-center py-16 bg-gray-900 text-white;
+/* ============================
+   Root Design Tokens (Colors & Spacing)
+============================ */
+:root {
+  --bg-color: #f8fafc;
+  --text-color: #1e293b;
+  --primary: #4431f5;
+  --primary-hover: #2b55de;
+  --section-gap: 3rem;
+  --icon-size: 1.4rem;
+  --card-radius: 12px;
+  --transition: 0.3s ease-in-out;
 }
 
-.contact__title {
-  @apply text-3xl font-semibold mb-4;
+/* ============================
+   Section Layout
+============================ */
+section {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  padding: 3rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--section-gap);
 }
 
-.contact__text {
-  @apply text-base text-gray-300;
+.contact-container {
+  display: flex;
+  gap: 4rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* ============================
+   Section Box Styling
+============================ */
+.contact-box {
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.contact-box h2 {
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  border-bottom: 2px solid var(--primary);
+  display: inline-block;
+  padding-bottom: 0.4rem;
+  letter-spacing: 1px;
+}
+
+/* ============================
+   Icon Row Layout
+============================ */
+.icon-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+/* ============================
+   Icon Link Styling (Minimal Hover)
+============================ */
+.contact-icon {
+  color: var(--primary);
+  font-size: var(--icon-size);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid blue;
+  border-radius: var(--card-radius);
+  background-color: transparent;
+  transition: var(--transition);
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.contact-icon i {
+  font-size: 1.5rem;
+  transition: none;
+}
+
+.contact-icon:hover {
+  color: var(--primary-hover);
+  border-color: var(--primary-hover);
+  background-color: rgba(65, 105, 225, 0.08);
+}
+
+/* No bounce, no movement */
+.contact-icon:hover i {
+  transform: none;
+}
+
+.contact-icon .lottie-container {
+  width: 60px;
+  height: 60px;
+}
+/* ============================
+   Optional Logo Image
+============================ */
+section img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  object-fit: cover;
+  margin-bottom: 1rem;
+  transition: transform var(--transition);
+}
+
+section img:hover {
+  transform: scale(1.05);
+}
+
+/* ============================
+   Responsive Adjustments
+============================ */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-box {
+    max-width: 100%;
+  }
+
+  .icon-row {
+    gap: 1rem;
+  }
+
+  .contact-icon {
+    justify-content: center;
+  }
 }

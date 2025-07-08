@@ -1,15 +1,86 @@
+:root {
+  --primary: #4169e1; /* Royal Blue */
+  --primary-light: #00000000;
+  --background: #f8fafc;
+  --text-main: #111;
+  --text-hover: var(--primary);
+  --shadow-hover: 0 8px 20px rgba(65, 105, 225, 0.2);
+}
+
 .navbar {
-  @apply flex justify-between items-center px-6 py-4 bg-black bg-opacity-70 text-white;
+  max-width: 100%;
+  background-color: var(--background);
+  padding: 2rem 1rem;
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
 }
 
-.navbar__logo {
-  @apply text-2xl font-bold tracking-wide;
+.nav-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  padding: 0 1rem;
 }
 
-.navbar__links {
-  @apply flex gap-6;
+.nav-band {
+  width: 100%;              /* Make all cards full width initially */
+  max-width: 420px;         /* Limit card width on large screens */
+  max-height: 60px;
+  padding: 1rem;
+  position: relative;
+  background: linear-gradient(135deg, #c1f0ff, #b0d4ff);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-default);
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: left;
 }
 
-.navbar__links li a {
-  @apply text-sm hover:text-sky-400 transition-colors duration-300;
+.nav-band:hover {
+  background-color: var(--primary-light);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px) scale(1.5);
+}
+
+.nav-label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  z-index: 2;
+  text-align: left;
+  user-select: none;
+  pointer-events: none;
+  padding: 0 10px;
+}
+
+/* Background Lottie */
+.nav-lottie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-band {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .nav-label {
+    font-size: 1rem;
+  }
 }

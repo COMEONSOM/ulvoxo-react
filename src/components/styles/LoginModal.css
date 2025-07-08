@@ -1,0 +1,376 @@
+/* ============================
+   Root Design Tokens
+============================ */
+:root {
+  --bg-color: #ffffff;
+  --modal-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  --text-color: #111;
+  --subtext-color: #555;
+  --primary: royalblue;
+  --primary-hover: #274dcf;
+  --danger: #e53935;
+  --danger-hover: #c62828;
+  --success: #2e7d32;
+  --card-radius: 16px;
+  --section-gap: 1.5rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.2rem;
+  --font-family: 'Inter', sans-serif;
+}
+
+/* ============================
+   Modal Base Styles
+============================ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(20, 20, 20, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal {
+  background: var(--bg-color);
+  padding: 2.5rem 2rem;
+  border-radius: var(--card-radius);
+  box-shadow: var(--modal-shadow);
+  width: 90%;
+  max-width: 420px;
+  position: relative;
+  text-align: center;
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: all 0.4s ease-in-out;
+}
+
+.modal-close {
+  position: absolute;
+  top: -18px;
+  right: -18px;
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background-color: var(--primary-hover);
+  transform: scale(1.1);
+}
+
+/* ============================
+   Headings
+============================ */
+h2 {
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--primary);
+}
+
+h3 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+/* ============================
+   OAuth Buttons
+============================ */
+.oauth-btn {
+  width: 100%;
+  margin: 0.4rem 0;
+  padding: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: var(--font-size-base);
+  color: white;
+}
+
+.oauth-btn.google {
+  background-color: #db4437;
+}
+.oauth-btn.google:hover {
+  background-color: #c23321;
+}
+
+.oauth-btn.facebook {
+  background-color: #4267b2;
+}
+.oauth-btn.facebook:hover {
+  background-color: #36529c;
+}
+
+.oauth-btn.github {
+  background-color: #24292e;
+}
+.oauth-btn.github:hover {
+  background-color: #0d1117;
+}
+
+/* ============================
+   Success Animation
+============================ */
+.success-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+.success-text {
+  margin-top: 1rem;
+  font-weight: bold;
+  font-size: var(--font-size-lg);
+  color: var(--success);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================
+   Profile Summary (Compact View)
+============================ */
+.profile-summary {
+  text-align: center;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  border-radius: 12px;
+}
+
+.profile-summary:hover {
+  background: #f5f5f5;
+}
+
+.profile-summary p {
+  margin: 0.4rem 0;
+  font-weight: 500;
+}
+
+.profile-summary small {
+  color: var(--subtext-color);
+  font-size: 0.85rem;
+}
+
+.profile-img,
+.profile-fallback {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-fallback {
+  background: var(--primary);
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================
+   Full Profile Modal
+============================ */
+.profile-details-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-details-wrapper {
+  background: var(--bg-color);
+  border-radius: var(--card-radius);
+  padding: 2rem 2.5rem;
+  box-shadow: var(--modal-shadow);
+  width: 90%;
+  max-width: 400px;
+  animation: fadeIn 0.4s ease;
+  text-align: center;
+  position: relative;
+}
+
+.profile-img-lg,
+.profile-fallback-lg {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+  margin-bottom: 1rem;
+}
+
+.profile-fallback-lg {
+  background: var(--primary);
+  color: white;
+  font-size: 2.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-details-card .profile-info-line {
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  font-weight: 500;
+  margin: 0.6rem 0;
+}
+
+/* ============================
+   Logout Button
+============================ */
+.logout-btn {
+  background-color: var(--danger);
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  margin-top: 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.logout-btn:hover {
+  background-color: var(--danger-hover);
+  transform: translateY(-1px);
+}
+
+/* ============================
+   Logout Confirmation
+============================ */
+.confirmation {
+  text-align: center;
+  animation: fadeIn 0.4s ease;
+}
+.confirm-btn-group {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+.btn-yes,
+.btn-no {
+  padding: 0.6rem 1.5rem;
+  margin-right: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: var(--font-size-base);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-yes {
+  background-color: var(--danger);
+  color: white;
+}
+.btn-yes:hover {
+  background-color: var(--danger-hover);
+}
+.btn-no {
+  background-color: #ccc;
+  color: #000;
+}
+.btn-no:hover {
+  background-color: #b3b3b3;
+}
+.success-container {
+  animation: fadeIn 0.5s ease;
+  text-align: center;
+}
+
+/* ============================
+   Fade In Animation
+============================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.login-launcher {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 10000;
+}
+
+.launcher-btn {
+  border: none;
+  background-color: #1d4ed8;
+  color: white;
+  font-size: 0.95rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s;
+}
+
+.launcher-btn.login:hover {
+  background-color: #2563eb;
+}
+
+.launcher-btn.profile {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+}
+
+.launcher-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #1d4ed8;
+}
+
+.launcher-initial {
+  width: 100%;
+  height: 100%;
+  background-color: #1d4ed8;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: 50%;
+}

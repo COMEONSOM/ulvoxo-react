@@ -1,0 +1,192 @@
+:root {
+  --primary-color: #4431f5;
+  --accent-color: #ffffff;
+  --bg-light: #f8fafc;
+  --text-main: #1e293b;
+  --text-subtle: #334155;
+  --card-bg: #ffffff;
+  --shadow-light: rgba(0, 0, 0, 0.06);
+  --shadow-hover: rgba(0, 0, 0, 0.12);
+}
+
+/* === About Company Section === */
+.about-company-section {
+  position: relative;
+  padding: 4rem 1.5rem;
+  background-color: var(--bg-light);
+  overflow: hidden;
+}
+
+/* === Particle & Lottie Backgrounds === */
+.particles-bg,
+.work-area-background-animation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.welcome-message {
+  font-size: 1.1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+  position: relative;
+  z-index: 1;
+}
+
+.about-heading {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+  color: var(--primary-color);
+}
+
+/* === Work Grid === */
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto 4rem;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 601px) {
+  .work-grid {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+}
+
+/* === Work Cards === */
+.work-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 24px var(--shadow-light);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  text-align: center; /* Ensures h3 is horizontally centered */
+  backdrop-filter: blur(3px);
+}
+
+.work-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px var(--shadow-hover);
+}
+
+.work-card h3 {
+  position: relative;
+  font-size: 1.2rem;
+  color: #0f172a;
+  padding-bottom: 6px;
+  margin-bottom: 0.75rem;
+  display: inline-block; /* ✨ Shrinks to text width */
+}
+
+.work-card h3::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0; /* Align exactly with start of text */
+  width: 100%; /* ✨ Underline matches text width */
+  height: 2px;
+  background-color: #7c3aed; /* Violet underline */
+}
+
+/* === Card Content === */
+.work-card p {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-subtle);
+  text-align: left;
+}
+
+/* === CTA Link in Card === */
+.work-card .cta {
+  color: #1c11eb;
+  font-weight: 600;
+  margin-top: 1rem;
+  display: block;
+  text-align: center;
+  transition: color 0.2s ease;
+}
+
+.work-card .cta:hover {
+  color: #352cdf;
+  text-decoration: underline;
+}
+
+/* === Why ULVOXO Section === */
+.why-ulvoxo {
+  background-color: #f9fafb;
+  padding: 3rem 1.5rem;
+  max-width: 950px;
+  margin: 0 auto 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+.why-ulvoxo h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--primary-color);
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+/* === Highlight Bullet Points === */
+.highlight-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+
+.highlight-point .bullet-animation {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.highlight-point p {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.highlight-point p strong {
+  font-weight: 700;
+}
+
+/* === Final Statement === */
+.why-ulvoxo-final {
+  text-align: center;
+  margin-top: 4rem;
+  font-size: 1.05rem;
+  color: #0f172a;
+}
+
+/* === Join CTA === */
+.join-ulvoxo {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--primary-color);
+  margin-top: 2rem;
+}
+
+/* === Chart Section === */
+.growth-chart {
+  margin-top: 3rem;
+  text-align: center;
+}

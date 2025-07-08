@@ -1,20 +1,75 @@
+/* styles/Header.css */
+
 .header {
-  @apply flex items-center justify-between px-6 py-4 bg-white shadow-md sticky top-0 z-50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+  z-index: 100;
 }
 
-.logo h1 {
-  @apply text-2xl font-bold text-sky-600;
+.logo {
+  display: flex;
+  align-items: center;
 }
 
-.loginForm,
-.otpForm {
-  @apply flex items-center gap-2;
+.logo-img {
+  height: 80px;
+  width: 80px;
+  object-fit: contain;
 }
 
-input {
-  @apply border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-sky-500;
+
+.auth-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-button {
-  @apply bg-sky-600 text-white px-4 py-1 rounded hover:bg-sky-700 transition duration-200;
+.login-button {
+  background-color: #1d4ed8;
+  color: white;
+  padding: 0.55rem 1.1rem;
+  border: none;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.login-button:hover {
+  background-color: #2563eb;
+}
+
+.profile-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  overflow: hidden;
+  padding: 0;
+  border: 2px solid #1d4ed8;
+  background: transparent;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.avatar-fallback {
+  width: 100%;
+  height: 100%;
+  background-color: #1d4ed8;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
 }
