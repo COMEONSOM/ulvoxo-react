@@ -57,7 +57,7 @@ export default function ContactFollow() {
               <Lottie animationData={twitterAnim} loop={true} style={{ width: 50, height: 50 }} />
             </a>
             <a
-              href="https://www.facebook.com/asversityfacebook"
+              href="https://www.facebook.com/comeonsom"
               target="_blank"
               rel="noopener noreferrer"
               className="contact-icon"

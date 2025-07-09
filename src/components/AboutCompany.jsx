@@ -43,7 +43,7 @@ const workAreas = [
   },
   {
     title: "ULVOXO SUPERTOOLS",
-    link: " https://comeonsom.github.io/X-by-ForLoop.com/",
+    link: " https://comeonsom.github.io/Ulvoxo-Supertools/",
     desc: [
       ["What it is:", "The ultimate AI aggregator platform—bringing together every useful AI website and tool you need to automate tasks, analyze data, and innovate."],
       ["Access:", "Through ULVOXO Website or direct."],

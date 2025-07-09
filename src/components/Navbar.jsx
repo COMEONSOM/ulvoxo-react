@@ -12,7 +12,7 @@ gsap.registerPlugin(MotionPathPlugin, CustomEase);
 const navItems = [
   { label: "Visit Ulvoxo Finance", href: "https://www.xfactorial.online/" },
   { label: "Visit Ulvoxo Institute of Modern Tech", href: "https://xfactorialdi.web.app/" },
-  { label: "Visit Ulvoxo SuperTools", href: "https://comeonsom.github.io/X-by-ForLoop.com/" },
+  { label: "Visit Ulvoxo SuperTools", href: "https://comeonsom.github.io/Ulvoxo-Supertools/" },
   { label: "Visit Ulvoxo Supertech", href: "https://comeonsom.github.io/Old-Technology.edu/" },
 ];
 

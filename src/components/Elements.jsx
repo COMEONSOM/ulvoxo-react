@@ -1,8 +1,6 @@
 // Elements.jsx
 import { useEffect, useRef } from "react";
 import "./styles/Elements.css";
-import Lottie from "lottie-react";
-import continueAnimation from "../animations/continuebutton.json";
 
 export default function Elements() {
   const newTagRef2 = useRef(null);
@@ -34,7 +32,7 @@ export default function Elements() {
       <div
         className="section-card"
         onClick={() =>
-          window.open("https://www.facebook.com/YOUR_FACEBOOK_LINK", "_blank")
+          window.open("https://www.facebook.com/ulvoxo", "_blank")
         }
       >
         <div className="text-group">
@@ -42,22 +40,20 @@ export default function Elements() {
             <h2 className="section-title">ULVOXO HAS A HEART</h2>
           </div>
           <div className="bio-container">
-            <p className="bio emergency-bio">[Your bio text here]</p>
+            <p className="bio emergency-bio">
+              Ulvoxo Has a Heart is where stories breathe—unfiltered, unpolished, and deeply human. It’s not a platform, not a brand—just a space where emotions are allowed to exist without explanation. We share moments of love, loss, hope, fear, and quiet courage. Some stories comfort, others ache—but all remind us that behind every face is a heart carrying something unseen. This isn’t about being perfect. It’s about being real.
+            </p>
           </div>
         </div>
-        <div className="lottie-wrap">
-          <Lottie
-            animationData={continueAnimation}
-            loop={true}
-            className="lottie-button"
-          />
-        </div>
+        <div className="cta-button">Join Us →</div>
       </div>
 
       {/* Section 2 */}
       <div
         className="section-card"
-        onClick={() => window.open("https://comeonsom.github.io/Ulvoxo-Update/", "_blank")}
+        onClick={() =>
+          window.open("https://comeonsom.github.io/Ulvoxo-Update/", "_blank")
+        }
       >
         <div className="text-group">
           <div className="section-title-container">
@@ -67,16 +63,12 @@ export default function Elements() {
             </span>
           </div>
           <div className="bio-container">
-            <p className="bio emergency-bio">[Your update text here]</p>
+            <p className="bio emergency-bio">
+              It is a single place for ITI, Diploma, and B.Tech students to find useful websites, study materials, and government job updates. Everything you need, all together.
+            </p>
           </div>
         </div>
-        <div className="lottie-wrap">
-          <Lottie
-            animationData={continueAnimation}
-            loop={true}
-            className="lottie-button"
-          />
-        </div>
+        <div className="cta-button">Click to Visit →</div>
       </div>
     </div>
   );
