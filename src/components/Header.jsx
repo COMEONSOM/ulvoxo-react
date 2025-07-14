@@ -31,7 +31,7 @@ export default function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src="/assets/logo.png" alt="Ulvoxo Logo" className="logo-img" />
+        <img src="/assets/ulvoxo-logo.png" alt="Ulvoxo Logo" className="logo-img" />
       </div>
 
       <div className="auth-area">

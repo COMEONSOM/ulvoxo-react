@@ -33,7 +33,7 @@ const workAreas = [
     ],
   },
   {
-    title: "ULVOXO INSTITUTE OF MODERN TECH",
+    title: "ULVOXO VERSITY",
     link: "https://xfactorialdi.web.app/",
     desc: [
       ["What it is:", "A financial-literacy and investing-education platform for MSMEs and college students."],
