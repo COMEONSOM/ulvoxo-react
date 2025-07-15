@@ -28,7 +28,7 @@ const workAreas = [
     link: "https://www.xfactorial.online/",
     desc: [
       ["What it is:", "A comprehensive suite of investor tools—market trackers, portfolio analyzers, risk-assessment calculators, and more."],
-      ["Access:", "Completely free, no login."],
+      ["Access:", "No ads! Login required to access some tools."],
       ["Why it exists:", "To remove barriers for amateur and professional investors alike. Whether you’re just starting or fine-tuning a multi-asset portfolio, ULVOXO FINANCE gives you the data and insights you need—at zero cost and with zero ads."],
     ],
   },
@@ -37,7 +37,7 @@ const workAreas = [
     link: "https://xfactorialdi.web.app/",
     desc: [
       ["What it is:", "A financial-literacy and investing-education platform for MSMEs and college students."],
-      ["Access:", "Free for registered users."],
+      ["Access:", "No ads! Visit to know more!"],
       ["Why it exists:", "We believe high-quality, in-depth courses shouldn’t break the bank. ULVOXO courses are priced at a nominal fee—just enough to cover our operational costs, with no ads or hidden charges. During Diwali, we offer a one-time special discount to spread awareness and welcome more learners."],
     ],
   },
@@ -45,18 +45,18 @@ const workAreas = [
     title: "ULVOXO SUPERTOOLS",
     link: " https://comeonsom.github.io/Ulvoxo-Supertools/",
     desc: [
-      ["What it is:", "The ultimate AI aggregator platform—bringing together every useful AI website and tool you need to automate tasks, analyze data, and innovate."],
-      ["Access:", "Through ULVOXO Website or direct."],
+      ["What it is:", "The ultimate AI aggregator platform—bringing together every useful AI websites you need."],
+      ["Access:", "Completely free no ads!"],
       ["Why it exists:", "To save you time hunting for the best AI resources. ULVOXO TOOLS organizes it all in one place."],
     ],
   },
   {
-    title: "ULVOXO SUPERTECH",
-    link: " https://comeonsom.github.io/Old-Technology.edu/",
+    title: "ULVOXO UPDATES",
+    link: "https://comeonsom.github.io/Ulvoxo-Update/",
     desc: [
-      ["What it is:", "R&D for hardware and embedded systems."],
-      ["Access:", "Invite-only access."],
-      ["Why it exists:", "Innovate with IoT + AI chips."],
+      ["What it is:", "Updates for ITI, Diploma, B.Tech students."],
+      ["Access:", "Completely free no ads!"],
+      ["Why it exists:", "It is a single place for ITI, Diploma, and B.Tech students to find useful websites, study materials, and government job updates. It’s completely free, has no ads. Just follow Ulvoxo—nothing else needed."],
     ],
   },
 ];
@@ -68,7 +68,7 @@ const highlights = [
   },
   {
     label: "Transparent Pricing:",
-    text: "Our only revenue comes from ULVOXO INSTITUTE courses, priced competitively against any market alternative, yet boasting more depth and real-world examples.",
+    text: "Our only revenue comes from ULVOXO VERSITY courses, priced competitively against any market alternative, yet boasting more depth and real-world examples.",
   },
   {
     label: "Small Team, Big Impact:",
@@ -211,7 +211,12 @@ export default function AboutCompany() {
             whileHover={{ scale: 1.03, y: -4 }}
             transition={{ type: "spring", stiffness: 280 }}
           >
-            <div>
+            <div className="relative">
+              
+              {title === "ULVOXO UPDATES" && (
+                <div className="new-badge">NEW</div>
+              )}
+
               <h3>{title}</h3>
               {desc.map(([label, val], i) => (
                 <p key={i}>
@@ -222,6 +227,7 @@ export default function AboutCompany() {
             </div>
           </motion.a>
         ))}
+
       </div>
 
       <motion.div

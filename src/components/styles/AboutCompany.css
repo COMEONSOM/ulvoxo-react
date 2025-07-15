@@ -101,6 +101,7 @@
   background-color: #7c3aed; /* Violet underline */
 }
 
+
 /* === Card Content === */
 .work-card p {
   font-size: 0.95rem;
@@ -189,4 +190,40 @@
 .growth-chart {
   margin-top: 3rem;
   text-align: center;
+}
+/* === NEW Badge Tag Styling === */
+.new-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #26ec26;
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 9999px;
+  font-weight: 700;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: pulse 2s infinite;
+  z-index: 2;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  }
+  70% {
+    transform: scale(1.05);
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Make sure parent of .new-badge is positioned */
+.work-card .relative {
+  position: relative;
 }

@@ -47,29 +47,6 @@ export default function Elements() {
         </div>
         <div className="cta-button">Join Us →</div>
       </div>
-
-      {/* Section 2 */}
-      <div
-        className="section-card"
-        onClick={() =>
-          window.open("https://comeonsom.github.io/Ulvoxo-Update/", "_blank")
-        }
-      >
-        <div className="text-group">
-          <div className="section-title-container">
-            <h2 className="section-title">ULVOXO UPDATES</h2>
-            <span className="new-tag" ref={newTagRef2}>
-              NEW
-            </span>
-          </div>
-          <div className="bio-container">
-            <p className="bio emergency-bio">
-              It is a single place for ITI, Diploma, and B.Tech students to find useful websites, study materials, and government job updates. Everything you need, all together.
-            </p>
-          </div>
-        </div>
-        <div className="cta-button">Click to Visit →</div>
-      </div>
     </div>
   );
 }

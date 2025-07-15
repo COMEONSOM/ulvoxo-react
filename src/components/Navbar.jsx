@@ -13,7 +13,7 @@ const navItems = [
   { label: "Visit Ulvoxo Finance", href: "https://www.xfactorial.online/" },
   { label: "Visit Ulvoxo Versity", href: "https://xfactorialdi.web.app/" },
   { label: "Visit Ulvoxo SuperTools", href: "https://comeonsom.github.io/Ulvoxo-Supertools/" },
-  { label: "Visit Ulvoxo SuperTech", href: "https://comeonsom.github.io/Old-Technology.edu/" },
+  { label: "Visit Ulvoxo Updates", href: "https://comeonsom.github.io/Ulvoxo-Update/" },
 ];
 
 export default function Navbar() {
