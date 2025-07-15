@@ -76,20 +76,28 @@ export default function LoginModal({ onClose, onLogin }) {
   }, [step]);
 
   const handleOAuthLogin = async (provider) => {
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const uName = getUsername(user);
-      setUserData(user);
-      setUsername(uName);
-      sessionStorage.setItem("ulvoxoUser", uName); // ✅ Save username
-      setStep("success");
-      onLogin?.({ user, username: uName });
-    } catch (error) {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    const uName = getUsername(user);
+    setUserData(user);
+    setUsername(uName);
+    sessionStorage.setItem("ulvoxoUser", uName);
+    setStep("success");
+    onLogin?.({ user, username: uName });
+  } catch (error) {
+    if (error.code === "auth/account-exists-with-different-credential") {
+      // 🔁 Guide the user
+      alert(
+        "This email is already registered with a different provider. Please try signing in using that provider (e.g., Google)."
+      );
+    } else {
       console.error("OAuth Login Error:", error);
       alert(`Login failed: ${error.message}`);
     }
-  };
+  }
+};
+
 
   const handleLogout = async () => {
     try {
