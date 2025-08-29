@@ -1,102 +1,36 @@
 // Navbar.jsx
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { MotionPathPlugin, CustomEase } from "gsap/all";
-import SplitType from "split-type";
-import "./styles/Navbar.css";
+// -------------------------------------------
+// A reusable, dev-friendly Navbar component
+// - No GSAP animations on first load (clean static look)
+// - Lottie animation runs in background for styling
+// - Each nav item redirects to external links
+// -------------------------------------------
+
+import { useRef } from "react";
 import Lottie from "lottie-react";
-import itemBgAnim from "../animations/navbarcontent.json"; // Use your preferred Lottie background
+import itemBgAnim from "../animations/navbarcontent.json"; // Background animation
+import "./styles/Navbar.css"; // Navbar specific styles
 
-gsap.registerPlugin(MotionPathPlugin, CustomEase);
-
+// ✅ Navigation items list (easy to update in future)
 const navItems = [
-  { label: "Visit Ulvoxo Finance", href: "https://www.xfactorial.online/" },
-  { label: "Visit Ulvoxo Versity", href: "https://xfactorialdi.web.app/" },
-  { label: "Visit Ulvoxo SuperTools", href: "https://comeonsom.github.io/Ulvoxo-Supertools/" },
-  { label: "Visit Ulvoxo Updates", href: "https://comeonsom.github.io/Ulvoxo-Update/" },
+  { label: " Ulvoxo Finance", href: "https://www.xfactorial.online/" },
+  { label: " Ulvoxo Versity", href: "https://xfactorialdi.web.app/" },
+  { label: " Ulvoxo SuperTools", href: "https://comeonsom.github.io/Ulvoxo-Supertools/" },
+  { label: " Ulvoxo Updates", href: "https://comeonsom.github.io/Ulvoxo-Update/" },
 ];
 
 export default function Navbar() {
+  // Reference for the nav container (if we want to add scroll/animations later)
   const containerRef = useRef(null);
 
-  useEffect(() => {
-    const bands = containerRef.current?.querySelectorAll(".nav-band");
-    if (!bands) return;
-
-    containerRef.current.style.perspective = "1000px";
-
-    bands.forEach((band, index) => {
-      const label = band.querySelector(".nav-label");
-      const split = new SplitType(label, { types: "chars" });
-
-      split.chars.forEach(char => {
-        char.style.display = "inline-block";
-        char.style.transformOrigin = "center center";
-      });
-
-      gsap.fromTo(
-        band,
-        {
-          x: -100,
-          y: 80,
-          rotateY: -15,
-          rotateX: 15,
-          opacity: 0,
-          scale: 0.9,
-          filter: "blur(4px)",
-        },
-        {
-          x: 0,
-          y: 0,
-          rotateY: 0,
-          rotateX: 0,
-          opacity: 1,
-          scale: 1,
-          filter: "blur(0px)",
-          duration: 1,
-          ease: "power4.out",
-          delay: index * 0.15,
-        }
-      );
-
-      gsap.fromTo(
-        split.chars,
-        {
-          y: 40,
-          rotateX: 45,
-          rotateY: -20,
-          opacity: 0,
-        },
-        {
-          y: 0,
-          rotateX: 0,
-          rotateY: 0,
-          opacity: 1,
-          ease: "back.out(1.7)",
-          duration: 0.6,
-          stagger: 0.03,
-          delay: 0.3 + index * 0.15,
-        }
-      );
-
-      gsap.to(band, {
-        boxShadow: "0 0 12px rgba(100,150,255,0.2)",
-        backgroundColor: "#f0f8ff",
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-        duration: 2.5,
-        delay: 0.4 + index * 0.2,
-      });
-    });
-  }, []);
-
+  // Function to safely redirect user to external links in a new tab
   const handleRedirect = (url) => {
     window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
     <nav className="navbar">
+      {/* Main container for nav items */}
       <ul className="nav-container" ref={containerRef}>
         {navItems.map((item, index) => (
           <li
@@ -105,7 +39,7 @@ export default function Navbar() {
             onClick={() => handleRedirect(item.href)}
             style={{ position: "relative", overflow: "hidden" }}
           >
-            {/* Lottie background behind each item */}
+            {/* 🔹 Lottie animation as background for each nav item */}
             <Lottie
               animationData={itemBgAnim}
               loop
@@ -117,12 +51,14 @@ export default function Navbar() {
                 width: "140%",
                 height: "140%",
                 zIndex: 0,
-                opacity: 0.25,
-                pointerEvents: "none",
+                opacity: 0.25, // Keep subtle so text is readable
+                pointerEvents: "none", // Prevent blocking clicks
               }}
             />
-            <span className="nav-label" style={{ position: "relative", zIndex: 1 }}>
-              {item.label}
+
+            {/* 🔹 Navigation Label (clickable text) */}
+            <span className="nav-label">
+              {item.label} <span className="nav-arrow">→</span>
             </span>
           </li>
         ))}
@@ -130,3 +66,28 @@ export default function Navbar() {
     </nav>
   );
 }
+
+/* 
+-------------------------------------------
+🔹 File Structure & Usage Notes
+-------------------------------------------
+1. navItems[]:
+   - Holds all the navigation options.
+   - To add a new link, just append a new object:
+     { label: "My New Page", href: "https://example.com" }
+
+2. Lottie animation:
+   - Each nav item has a Lottie background animation.
+   - Controlled via itemBgAnim (JSON file).
+   - Non-blocking: zIndex + pointerEvents ensure the label stays usable.
+
+3. Styles:
+   - Navbar.css contains reusable styling (padding, hover effects, font-size).
+   - Inline styles are minimal (used for positioning only).
+
+4. Future friendly:
+   - Easy to add/remove items.
+   - Easy to replace Lottie animation (just swap JSON).
+   - If animations (like GSAP) are needed later, can be reintroduced 
+     inside `useEffect`.
+*/

@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lottie from "lottie-react";
-import backgroundAnimation from "../animations/backbackground.json"; // Background animation
-import bulletAnimation from "../animations/cute.json"; // Bullet animation
+import backgroundAnimation from "../animations/background.json"; // Background animation
+import bulletAnimation from "../animations/bulletpoints.json"; // Bullet animation
 import "./styles/AboutCompany.css";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";

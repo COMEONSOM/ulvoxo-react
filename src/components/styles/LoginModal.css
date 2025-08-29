@@ -1,376 +1,340 @@
-/* ============================
-   Root Design Tokens
-============================ */
+/* ============================================================
+   LOGIN MODAL (SCOPED STYLES) — 2026 READY
+   CONSUMES GLOBAL TOKENS FROM :root (Header.css). FALLBACKS ADDED.
+   ============================================================ */
+
+/* TOKEN MAPPINGS (SAFETY FALLBACKS IF GLOBALS CHANGE) */
 :root {
-  --bg-color: #ffffff;
-  --modal-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  --text-color: #111;
-  --subtext-color: #555;
-  --primary: royalblue;
-  --primary-hover: #274dcf;
-  --danger: #e53935;
-  --danger-hover: #c62828;
-  --success: #2e7d32;
-  --card-radius: 16px;
-  --section-gap: 1.5rem;
-  --font-size-base: 1rem;
-  --font-size-lg: 1.2rem;
-  --font-family: 'Inter', sans-serif;
+  --lm-bg: var( #ffffff3b);
+  --lm-overlay: rgba(20, 20, 20, 0.4);
+  --lm-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+
+  --lm-text: var(--color-text-dark, #111111);
+  --lm-subtext: #555;
+
+  --lm-primary: var(--color-primary, #1d4ed8);
+  --lm-primary-hover: var(--color-primary-hover, #2563eb);
+  --lm-danger: #e53935;
+  --lm-danger-hover: #c62828;
+  --lm-success: #2e7d32;
+
+  --lm-radius-card: 16px;
+  --lm-radius-pill: 30px;
+
+  --lm-font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  --lm-fs-xs: var(--font-size-xs, 0.75rem);
+  --lm-fs-sm: var(--font-size-sm, 0.875rem);
+  --lm-fs-md: var(--font-size-md, 1rem);
+  --lm-fs-lg: var(--font-size-lg, 1.125rem);
+  --lm-fs-xl: 1.6rem;
+
+  --lm-space-xs: var(--space-xs, 0.5rem);
+  --lm-space-sm: var(--space-sm, 0.75rem);
+  --lm-space-md: var(--space-md, 1rem);
+  --lm-space-lg: var(--space-lg, 1.5rem);
 }
 
-/* ============================
-   Modal Base Styles
-============================ */
+/* ============================================================
+   OVERLAY + CONTAINER
+   ============================================================ */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(20, 20, 20, 0.4);
+  background: var(--lm-overlay);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 999;
+  z-index: 2000; /* ABOVE HEADER (100) */
 }
 
-.modal {
-  background: var(--bg-color);
-  padding: 2.5rem 2rem;
-  border-radius: var(--card-radius);
-  box-shadow: var(--modal-shadow);
+.modal-container {
+  background: var(--lm-bg);
+  padding: 2.25rem 2rem;
+  border-radius: var(--lm-radius-card);
+  box-shadow: var(--lm-shadow);
   width: 90%;
   max-width: 420px;
   position: relative;
-  text-align: center;
-  color: var(--text-color);
+  color: var(--lm-text);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: all 0.4s ease-in-out;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+  font-family: var(--lm-font);
+  text-align: center;
 }
 
+/* LOADER VARIANT (REUSES CONTAINER) */
+.modal-loader {
+  min-height: 160px;
+  display: grid;
+  place-items: center;
+}
+
+/* CLOSE BUTTON */
 .modal-close {
   position: absolute;
   top: -18px;
   right: -18px;
   width: 40px;
   height: 40px;
-  background-color: var(--primary);
-  color: white;
+  background-color: var(--lm-primary);
+  color: #fff;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   border: none;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  transition: background-color 0.25s ease, transform 0.2s ease;
   z-index: 10;
 }
+.modal-close:hover { background-color: var(--lm-primary-hover); transform: scale(1.08); }
+.modal-close:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
-.modal-close:hover {
-  background-color: var(--primary-hover);
-  transform: scale(1.1);
-}
-
-/* ============================
-   Headings
-============================ */
-h2 {
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-  font-size: 1.6rem;
-  color: var(--primary);
-}
-
-h3 {
-  font-weight: 600;
+/* ============================================================
+   TYPOGRAPHY (SCOPED TO MODAL)
+   ============================================================ */
+.modal-container h2 {
   margin-bottom: 1rem;
-  color: var(--text-color);
+  font-weight: 700;
+  font-size: var(--lm-fs-xl);
+  color: var(--lm-primary);
 }
 
-/* ============================
-   OAuth Buttons
-============================ */
+.modal-container h3 {
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  font-size: var(--lm-fs-lg);
+  color: var(--lm-text);
+}
+
+.modal-container p { font-size: var(--lm-fs-md); }
+
+/* ============================================================
+   OAUTH BUTTONS
+   ============================================================ */
+.oauth-buttons { margin-top: 1rem; }
+
 .oauth-btn {
   width: 100%;
-  margin: 0.4rem 0;
+  margin: 0.45rem 0;
   padding: 12px;
-  font-weight: 600;
+  font-weight: 700;
   border-radius: 12px;
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: var(--font-size-base);
-  color: white;
+  transition: transform 0.12s ease, filter 0.2s ease;
+  font-size: var(--lm-fs-md);
+  color: #fff;
 }
+.oauth-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
+.oauth-btn:hover { transform: translateY(-1px); }
 
-.oauth-btn.google {
-  background-color: #db4437;
-}
-.oauth-btn.google:hover {
-  background-color: #c23321;
-}
+/* PROVIDER COLORS */
+.oauth-btn.google   { background-color: #db4437; }
+.oauth-btn.google:hover   { filter: brightness(0.95); }
 
-.oauth-btn.facebook {
-  background-color: #4267b2;
-}
-.oauth-btn.facebook:hover {
-  background-color: #36529c;
-}
+.oauth-btn.facebook { background-color: #4267b2; }
+.oauth-btn.facebook:hover { filter: brightness(0.95); }
 
-.oauth-btn.github {
-  background-color: #24292e;
-}
-.oauth-btn.github:hover {
-  background-color: #0d1117;
-}
+.oauth-btn.github   { background-color: #24292e; }
+.oauth-btn.github:hover   { filter: brightness(0.95); }
 
-/* ============================
-   Success Animation
-============================ */
+/* ============================================================
+   SUCCESS / ERROR STATES
+   ============================================================ */
 .success-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+  display: grid;
+  place-items: center;
   text-align: center;
-  animation: fadeIn 0.6s ease;
+  animation: fadeIn 0.5s ease;
 }
 
 .success-text {
-  margin-top: 1rem;
-  font-weight: bold;
-  font-size: var(--font-size-lg);
-  color: var(--success);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  margin-top: 0.75rem;
+  font-weight: 800;
+  font-size: var(--lm-fs-lg);
+  color: var(--lm-success);
+  text-shadow: 0 1px 1px rgba(0,0,0,0.08);
 }
 
-/* ============================
-   Profile Summary (Compact View)
-============================ */
+.success-subtext {
+  color: var(--lm-subtext);
+  font-size: var(--lm-fs-sm);
+}
+
+.error-text {
+  margin-top: 0.75rem;
+  font-weight: 800;
+  font-size: var(--lm-fs-lg);
+  color: var(--lm-danger);
+}
+
+.error-subtext {
+  color: var(--lm-subtext);
+  font-size: var(--lm-fs-sm);
+  max-width: 90%;
+  margin: 0.25rem auto 0;
+}
+
+.retry-btn {
+  background-color: var(--lm-primary);
+  color: #fff;
+  padding: 0.55rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.12s ease, background 0.2s ease;
+}
+.retry-btn:hover { background-color: var(--lm-primary-hover); transform: translateY(-1px); }
+.retry-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
+
+/* ============================================================
+   PROFILE SUMMARY (COMPACT)
+   ============================================================ */
 .profile-summary {
   text-align: center;
   padding: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.25s ease;
   border-radius: 12px;
 }
+.profile-summary:hover { background: #f5f5f5; }
 
-.profile-summary:hover {
-  background: #f5f5f5;
-}
-
-.profile-summary p {
+.profile-summary-text p {
   margin: 0.4rem 0;
-  font-weight: 500;
+  font-weight: 600;
+}
+.profile-summary-text small {
+  color: var(--lm-subtext);
+  font-size: var(--lm-fs-sm);
 }
 
-.profile-summary small {
-  color: var(--subtext-color);
-  font-size: 0.85rem;
-}
-
-.profile-img,
-.profile-fallback {
+/* AVATAR SIZES (SHARED WITH HEADER NAMING) */
+.avatar,
+.avatar-fallback {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 0.5rem;
+  object-fit: contain;   /* ✅ prevent cropping */
+  background: #f9fafb;  /* neutral background */
+  margin: 0 auto 0.5rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-.profile-fallback {
-  background: var(--primary);
-  color: white;
+.avatar-fallback {
+  background: var(--lm-primary);
+  color: #fff;
   font-size: 2rem;
-  font-weight: bold;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  font-weight: 800;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
 }
 
-/* ============================
-   Full Profile Modal
-============================ */
-.profile-details-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  background-color: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(6px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* ============================================================
+   PROFILE DETAILS
+   ============================================================ */
+.profile-details { text-align: center; }
 
-.profile-details-wrapper {
-  background: var(--bg-color);
-  border-radius: var(--card-radius);
-  padding: 2rem 2.5rem;
-  box-shadow: var(--modal-shadow);
-  width: 90%;
-  max-width: 400px;
-  animation: fadeIn 0.4s ease;
-  text-align: center;
-  position: relative;
-}
-
-.profile-img-lg,
-.profile-fallback-lg {
+.avatar-lg,
+.avatar-fallback-lg {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--primary);
-  margin-bottom: 1rem;
-}
-
-.profile-fallback-lg {
-  background: var(--primary);
-  color: white;
-  font-size: 2.5rem;
-  font-weight: bold;
+  object-fit: contain;   /* ✅ prevent cropping */
+  background: #f9fafb;
+  border: 3px solid var(--lm-primary);
+  margin: 0 auto 1rem auto;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+.avatar-fallback-lg {
+  background: var(--lm-primary);
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 800;
+}
 
-.profile-details-card .profile-info-line {
-  font-size: var(--font-size-base);
-  color: var(--text-color);
-  font-weight: 500;
+.profile-field {
+  font-size: var(--lm-fs-md);
+  color: var(--lm-text);
+  font-weight: 600;
   margin: 0.6rem 0;
 }
 
-/* ============================
-   Logout Button
-============================ */
+/* ============================================================
+   LOGOUT ACTIONS
+   ============================================================ */
+.logout-confirm { margin-top: 1.2rem; }
+
 .logout-btn {
-  background-color: var(--danger);
-  color: white;
+  background-color: var(--lm-danger);
+  color: #fff;
   padding: 0.6rem 1.5rem;
   border: none;
-  border-radius: 8px;
-  margin-top: 1.2rem;
+  border-radius: 10px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  font-weight: 800;
+  transition: transform 0.12s ease, background 0.2s ease;
 }
-.logout-btn:hover {
-  background-color: var(--danger-hover);
-  transform: translateY(-1px);
-}
+.logout-btn:hover { background-color: var(--lm-danger-hover); transform: translateY(-1px); }
+.logout-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
-/* ============================
-   Logout Confirmation
-============================ */
-.confirmation {
-  text-align: center;
-  animation: fadeIn 0.4s ease;
-}
-.confirm-btn-group {
+/* ============================================================
+   LOGOUT CONFIRMATION
+   ============================================================ */
+.logout-confirmation { text-align: center; animation: fadeIn 0.35s ease; }
+
+.confirmation-actions {
   margin-top: 1rem;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
 }
+
 .btn-yes,
 .btn-no {
   padding: 0.6rem 1.5rem;
-  margin-right: 1rem;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: var(--font-size-base);
+  border-radius: 10px;
+  font-weight: 800;
+  font-size: var(--lm-fs-md);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: transform 0.12s ease, filter 0.2s ease;
 }
-.btn-yes {
-  background-color: var(--danger);
-  color: white;
-}
-.btn-yes:hover {
-  background-color: var(--danger-hover);
-}
-.btn-no {
-  background-color: #ccc;
-  color: #000;
-}
-.btn-no:hover {
-  background-color: #b3b3b3;
-}
-.success-container {
-  animation: fadeIn 0.5s ease;
-  text-align: center;
-}
+.btn-yes { background-color: var(--lm-danger); color: #fff; }
+.btn-yes:hover { filter: brightness(0.95); transform: translateY(-1px); }
+.btn-yes:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
-/* ============================
-   Fade In Animation
-============================ */
+.btn-no { background-color: #e0e0e0; color: #111; }
+.btn-no:hover { filter: brightness(0.97); transform: translateY(-1px); }
+.btn-no:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.login-launcher {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 10000;
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.launcher-btn {
-  border: none;
-  background-color: #1d4ed8;
-  color: white;
-  font-size: 0.95rem;
-  padding: 0.6rem 1.2rem;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  transition: background 0.2s;
-}
-
-.launcher-btn.login:hover {
-  background-color: #2563eb;
-}
-
-.launcher-btn.profile {
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-}
-
-.launcher-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #1d4ed8;
-}
-
-.launcher-initial {
-  width: 100%;
-  height: 100%;
-  background-color: #1d4ed8;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 600;
-  border-radius: 50%;
+/* ============================================================
+   REDUCED MOTION SUPPORT
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .modal-container { transition: none; }
+  .oauth-btn,
+  .logout-btn,
+  .btn-yes,
+  .btn-no,
+  .retry-btn { transition: none; }
 }
