@@ -11,6 +11,7 @@ import { auth } from "../lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import Lottie from "lottie-react";
 import loginAnimation from "../animations/login.json";
+import headerBackground from "../animations/headerbackground.json"; // <<-- NEW
 
 export default function Header() {
   // ============================================================
@@ -42,11 +43,11 @@ export default function Header() {
 
   // ============================================================
   // LOGOUT HANDLER
+  // NOTE: onAuthStateChanged will set user=null automatically
   // ============================================================
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setUser(null);
       setShowLogin(false);
     } catch (error) {
       console.error("ERROR DURING LOGOUT:", error);
@@ -63,6 +64,23 @@ export default function Header() {
   // ============================================================
   return (
     <header className="header" role="banner">
+      {/* HEADER BACKGROUND ANIMATION */}
+      <div className="header-bg">
+        <Lottie
+          animationData={headerBackground}
+          loop
+          autoplay
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover", // keeps ratio stable
+          }}
+          rendererSettings={{
+            preserveAspectRatio: "xMidYMid slice", // prevent shutter/stretch
+          }}
+        />
+      </div>
+
       {/* LOGO SECTION */}
       <div className="logo">
         <img
@@ -76,14 +94,12 @@ export default function Header() {
       {/* AUTH AREA */}
       <div className="auth-area">
         {user ? (
-          // ======================================================
-          // LOGGED-IN → SHOW PROFILE AVATAR (OPENS PROFILE MODAL)
-          // ======================================================
           <button
             className="profile-button"
             onClick={() => {
-              // signal the modal to open directly in profile details
-              try { sessionStorage.setItem("ulvoxoOpenProfileDetails", "1"); } catch {}
+              try {
+                sessionStorage.setItem("ulvoxoOpenProfileDetails", "1");
+              } catch {}
               setShowLogin(true);
             }}
             aria-label="Open profile menu"
@@ -97,10 +113,6 @@ export default function Header() {
             )}
           </button>
         ) : (
-          // ======================================================
-          // LOGGED-OUT → SHOW LOTTIE LOGIN LAUNCHER
-          // ENTIRE AREA IS CLICKABLE; TEXT IS PURELY DECORATIVE
-          // ======================================================
           <button
             type="button"
             className="login-animation"
@@ -121,6 +133,7 @@ export default function Header() {
           onClose={() => setShowLogin(false)}
           onLogin={handleLogin}
           onLogout={handleLogout}
+          user={user} // pass current user from Header
         />
       )}
     </header>

@@ -72,22 +72,21 @@ section {
 ============================ */
 .contact-icon {
   color: var(--primary);
-  font-size: var(--icon-size);
+  font-size: 2rem;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.6rem 1rem;
+  padding: 0.5rem 1rem;
   border: 1px solid blue;
   border-radius: var(--card-radius);
   background-color: transparent;
   transition: var(--transition);
-  font-weight: 500;
   box-shadow: none;
 }
 
 .contact-icon i {
-  font-size: 1.5rem;
+  font-size: 2rem;
   transition: none;
 }
 
@@ -97,7 +96,6 @@ section {
   background-color: rgba(65, 105, 225, 0.08);
 }
 
-/* No bounce, no movement */
 .contact-icon:hover i {
   transform: none;
 }
@@ -105,22 +103,6 @@ section {
 .contact-icon .lottie-container {
   width: 60px;
   height: 60px;
-}
-/* ============================
-   Optional Logo Image
-============================ */
-section img {
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 2px solid var(--primary);
-  object-fit: cover;
-  margin-bottom: 1rem;
-  transition: transform var(--transition);
-}
-
-section img:hover {
-  transform: scale(1.05);
 }
 
 /* ============================

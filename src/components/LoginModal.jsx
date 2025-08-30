@@ -37,7 +37,8 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // ============================================================
   const getUsername = (user) => {
     if (user?.email) return user.email.split("@")[0] + "@ulvoxo";
-    if (user?.phoneNumber) return user.phoneNumber.replace(/[^0-9]/g, "") + "@ulvoxo";
+    if (user?.phoneNumber)
+      return user.phoneNumber.replace(/[^0-9]/g, "") + "@ulvoxo";
     return "guest@ulvoxo";
   };
 
@@ -60,7 +61,6 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // ============================================================
   // FIREBASE AUTH SUBSCRIPTION
   // NOTE: DO NOT OVERRIDE success/error SCREENS
-  //       (this was causing the success Lottie to never appear)
   // ============================================================
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -74,28 +74,51 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
         setUsername(uName);
         sessionStorage.setItem("ulvoxoUser", uName);
 
-        // Only move to profile if we're NOT currently showing success/error
-        setStep((prev) => (prev === "success" || prev === "error" ? prev : "profile"));
+        // Only move to profile if not in success/error
+        setStep((prev) =>
+          prev === "success" || prev === "error" ? prev : "profile"
+        );
         setShowDetails(wantDetails ? true : false);
         if (wantDetails) {
-          try { sessionStorage.removeItem("ulvoxoOpenProfileDetails"); } catch {}
+          try {
+            sessionStorage.removeItem("ulvoxoOpenProfileDetails");
+          } catch {}
         }
 
-        onLogin?.(user); // RAW USER OBJECT ONLY
+        onLogin?.(user); // RAW USER OBJECT
       } else {
         setUserData(null);
         setUsername("guest@ulvoxo");
         sessionStorage.removeItem("ulvoxoUser");
         setShowDetails(false);
-        // Don't force "initial" over success/error
-        setStep((prev) => (prev === "success" || prev === "error" ? prev : "initial"));
+        setStep((prev) =>
+          prev === "success" || prev === "error" ? prev : "initial"
+        );
       }
     });
     return unsubscribe;
   }, [onLogin]);
 
   // ============================================================
-  // SUCCESS → COUNTDOWN → REDIRECT TO MAIN SITE
+  // CHECK SESSION FLAG WHEN MODAL OPENS
+  // ============================================================
+  useEffect(() => {
+    if (step === "profile") {
+      const wantDetails =
+        typeof window !== "undefined" &&
+        sessionStorage.getItem("ulvoxoOpenProfileDetails") === "1";
+
+      if (wantDetails) {
+        setShowDetails(true);
+        try {
+          sessionStorage.removeItem("ulvoxoOpenProfileDetails");
+        } catch {}
+      }
+    }
+  }, [step]);
+
+  // ============================================================
+  // SUCCESS → COUNTDOWN → REDIRECT
   // ============================================================
   useEffect(() => {
     if (step === "success") {
@@ -103,7 +126,6 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
       const interval = setInterval(() => setCountdown((s) => s - 1), 1000);
 
       const timeout = setTimeout(() => {
-        // Close modal and go back to main site (home)
         onClose?.();
         const MAIN_SITE_URL = window.location.origin;
         window.location.assign(MAIN_SITE_URL);
@@ -117,7 +139,7 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   }, [step, onClose]);
 
   // ============================================================
-  // OAUTH LOGIN HANDLER (POPUP)
+  // OAUTH LOGIN HANDLER
   // ============================================================
   const handleOAuthLogin = async (provider) => {
     try {
@@ -129,23 +151,25 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
       setUsername(uName);
       sessionStorage.setItem("ulvoxoUser", uName);
 
-      // Show SUCCESS lottie + message + countdown
-      setStep("success");
-      onLogin?.(user); // RAW USER
+      setStep("success"); // Show SUCCESS state
+      onLogin?.(user);
     } catch (error) {
       console.error("OAUTH LOGIN ERROR:", error);
 
       let msg = "Login failed. Please try again.";
       if (error?.code === "auth/popup-closed-by-user") {
         msg = "Login was cancelled before completion.";
-      } else if (error?.code === "auth/account-exists-with-different-credential") {
-        msg = "This email is already registered with a different provider. Please sign in using that provider.";
+      } else if (
+        error?.code === "auth/account-exists-with-different-credential"
+      ) {
+        msg =
+          "This email is already registered with a different provider. Please sign in using that provider.";
       } else if (error?.message) {
         msg = error.message;
       }
 
       setErrorMessage(msg);
-      setStep("error"); // Show FAILED lottie
+      setStep("error");
     }
   };
 
@@ -160,7 +184,8 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
       sessionStorage.removeItem("ulvoxoUser");
       setShowDetails(false);
       setStep("initial");
-      onLogout?.();
+
+      if (onLogout) onLogout();
     } catch (error) {
       console.error("LOGOUT ERROR:", error);
       setErrorMessage(error.message || "Logout failed. Please try again.");
@@ -197,7 +222,12 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // ============================================================
   if (step === "loading") {
     return (
-      <div className="modal-overlay" role="dialog" aria-modal="true" aria-label="Authenticating">
+      <div
+        className="modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Authenticating"
+      >
         <div className="modal-container modal-loader" ref={modalRef}>
           <p>Authenticating…</p>
         </div>
@@ -215,7 +245,6 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
       aria-modal="true"
       aria-label="Authentication Modal"
       onMouseDown={(e) => {
-        // CLICK OUTSIDE TO CLOSE (IGNORE CLICKS INSIDE CONTAINER)
         if (e.target.classList.contains("modal-overlay")) onClose?.();
       }}
     >
@@ -261,20 +290,33 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
         {/* SUCCESS STATE */}
         {step === "success" && (
           <div className="success-container">
-            <Lottie animationData={successAnimation} loop={false} autoplay style={{ width: 200, height: 200 }} />
+            <Lottie
+              animationData={successAnimation}
+              loop={false}
+              autoplay
+              style={{ width: 200, height: 200 }}
+            />
             <p className="success-text">Login successful!</p>
             <p className="success-subtext" style={{ marginTop: 6 }}>
-              Taking you to the site in <strong>{Math.max(countdown, 0)}s</strong>…
+              Taking you to the site in{" "}
+              <strong>{Math.max(countdown, 0)}s</strong>…
             </p>
           </div>
         )}
 
-        {/* ERROR / UNSUCCESSFUL STATE */}
+        {/* ERROR STATE */}
         {step === "error" && (
           <div className="success-container">
-            <Lottie animationData={failedAnimation} loop={false} autoplay style={{ width: 200, height: 200 }} />
+            <Lottie
+              animationData={failedAnimation}
+              loop={false}
+              autoplay
+              style={{ width: 200, height: 200 }}
+            />
             <p className="error-text">Login unsuccessful</p>
-            <p className="error-subtext" style={{ marginTop: 6 }}>{errorMessage}</p>
+            <p className="error-subtext" style={{ marginTop: 6 }}>
+              {errorMessage}
+            </p>
             <div style={{ marginTop: 12 }}>
               <button
                 className="retry-btn"
@@ -289,15 +331,19 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
           </div>
         )}
 
-        {/* PROFILE SUMMARY (CLICK TO EXPAND) */}
+        {/* PROFILE SUMMARY */}
         {step === "profile" && userData && !showDetails && (
           <div
             className="profile-summary"
             role="button"
             tabIndex={0}
-            onClick={() => setShowDetails(true)}
+            onClick={(e) => {
+              e.stopPropagation(); // prevent overlay click close
+              setShowDetails(true);
+            }}
             onKeyDown={(e) => e.key === "Enter" && setShowDetails(true)}
           >
+
             {userData.photoURL ? (
               <img src={userData.photoURL} alt="User avatar" className="avatar" />
             ) : (
@@ -314,9 +360,16 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
 
         {/* PROFILE DETAILS */}
         {showDetails && userData && step === "profile" && (
-          <div className="profile-details">
+          <div
+            className="profile-details"
+            onClick={(e) => e.stopPropagation()} // ✅ correct place
+          >
             {userData.photoURL ? (
-              <img src={userData.photoURL} alt="User avatar" className="avatar-lg" />
+              <img
+                src={userData.photoURL}
+                alt="User avatar"
+                className="avatar-lg"
+              />
             ) : (
               <div className="avatar-fallback-lg" aria-hidden="true">
                 {getInitial(userData.displayName)}
@@ -329,20 +382,28 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
             <div className="profile-field">Username: {username}</div>
 
             <div className="logout-confirm">
-              <button className="logout-btn" onClick={() => setStep("confirmLogout")}>
+              <button
+                className="logout-btn"
+                onClick={() => setStep("confirmLogout")}
+              >
                 Log out
               </button>
             </div>
           </div>
         )}
 
+
         {/* LOGOUT CONFIRMATION */}
         {step === "confirmLogout" && (
           <div className="logout-confirmation">
             <h3>Confirm Logout</h3>
             <div className="confirmation-actions">
-              <button className="btn-yes" onClick={handleLogout}>Yes, Logout</button>
-              <button className="btn-no"  onClick={() => setStep("profile")}>Cancel</button>
+              <button className="btn-yes" onClick={handleLogout}>
+                Yes, Logout
+              </button>
+              <button className="btn-no" onClick={() => setStep("profile")}>
+                Cancel
+              </button>
             </div>
           </div>
         )}

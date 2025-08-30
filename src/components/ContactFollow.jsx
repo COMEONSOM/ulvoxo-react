@@ -54,15 +54,19 @@ export default function ContactFollow() {
               rel="noopener noreferrer"
               className="contact-icon"
             >
-              <Lottie animationData={twitterAnim} loop={true} style={{ width: 50, height: 50 }} />
+              <div className="lottie-wrapper">
+                <Lottie animationData={twitterAnim} loop={true} style={{ width: 40, height: 40 }}/>
+              </div>
             </a>
             <a
               href="https://www.facebook.com/comeonsom"
               target="_blank"
               rel="noopener noreferrer"
               className="contact-icon"
-            >
-              <Lottie className= "facebookanimation" animationData={facebookAnim} loop={true} style={{ width: 50, height: 50 }} />
+            > 
+              <div className="lottie-wrapper">
+                <Lottie className= "facebookanimation" animationData={facebookAnim} loop={true} style={{ width: 50, height: 50 }} />
+              </div>
             </a>
           </div>
         </div>
@@ -77,13 +81,17 @@ export default function ContactFollow() {
               rel="noopener noreferrer"
               className="contact-icon"
             >
-              <Lottie animationData={whatsappAnim} loop={true} style={{ width: 50, height: 50 }} />
+              <div className="lottie-wrapper">
+                <Lottie animationData={whatsappAnim} loop={true} style={{ width: 50, height: 50 }} />
+              </div>
             </a>
             <a
               href="mailto:xuserplatform@gmail.com"
               className="contact-icon"
             >
-              <Lottie animationData={gmailAnim} loop={true} style={{ width: 50, height: 50 }} />
+              <div className="lottie-wrapper">
+                <Lottie animationData={gmailAnim} loop={true} style={{ width: 50, height: 50 }} />
+              </div>
             </a>
           </div>
         </div>
