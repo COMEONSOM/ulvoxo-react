@@ -78,7 +78,7 @@
    ============================================================ */
 .header {
   position: relative;
-  overflow: hidden;
+  overflow: show;
 }
 
 .header-bg {

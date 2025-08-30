@@ -1,87 +1,70 @@
-// ============================================================
-// HEADER COMPONENT (2026 READY)
-// RENDERS BRAND LOGO + AUTH AREA (LOTTIE LOGIN / PROFILE AVATAR)
-// USES FIREBASE AUTH STATE + OPENS LoginModal WHEN NEEDED
-// ============================================================
-
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./styles/Header.css";
+
 import LoginModal from "./LoginModal";
+import Lottie from "lottie-react";
+import headerBackground from "../animations/headerbackground.json";
+import loginAnimation from "../animations/login.json";
+
 import { auth } from "../lib/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import Lottie from "lottie-react";
-import loginAnimation from "../animations/login.json";
-import headerBackground from "../animations/headerbackground.json"; // <<-- NEW
 
 export default function Header() {
-  // ============================================================
-  // LOCAL STATE
-  // showLogin → CONTROLS VISIBILITY OF LOGIN MODAL
-  // user      → CURRENT AUTHENTICATED USER OBJECT (FIREBASE USER)
-  // ============================================================
-  const [showLogin, setShowLogin] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // ============================================================
-  // FIREBASE AUTH STATE LISTENER (SINGLE SOURCE OF TRUTH)
-  // ============================================================
+  // Keep header in sync with Firebase session
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
       setUser(firebaseUser || null);
     });
-    return unsubscribe; // CLEANUP ON UNMOUNT
+    return unsub;
   }, []);
 
-  // ============================================================
-  // LOGIN CALLBACK (RECEIVES RAW FIREBASE USER)
-  // NOTE: WE ALWAYS PASS BACK THE RAW USER (NO NESTED OBJECT)
-  // ============================================================
-  const handleLogin = (firebaseUser) => {
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const onDocClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", onDocClick);
+    return () => document.removeEventListener("mousedown", onDocClick);
+  }, []);
+
+  const handleLoginSuccess = (firebaseUser) => {
+    // Let the modal show success + countdown; just sync state here.
     setUser(firebaseUser);
-    setShowLogin(false);
   };
 
-  // ============================================================
-  // LOGOUT HANDLER
-  // NOTE: onAuthStateChanged will set user=null automatically
-  // ============================================================
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      setShowLogin(false);
-    } catch (error) {
-      console.error("ERROR DURING LOGOUT:", error);
+    } catch (err) {
+      console.error("Logout error:", err);
+    } finally {
+      setUser(null);
+      setShowDropdown(false);
     }
   };
 
-  // ============================================================
-  // UTILITY: GET INITIAL LETTER FOR FALLBACK AVATAR
-  // ============================================================
   const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "U");
 
-  // ============================================================
-  // RENDER
-  // ============================================================
   return (
     <header className="header" role="banner">
-      {/* HEADER BACKGROUND ANIMATION */}
-      <div className="header-bg">
+      {/* Animated background */}
+      <div className="header-bg" aria-hidden="true">
         <Lottie
           animationData={headerBackground}
           loop
           autoplay
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover", // keeps ratio stable
-          }}
-          rendererSettings={{
-            preserveAspectRatio: "xMidYMid slice", // prevent shutter/stretch
-          }}
+          style={{ width: "100%", height: "100%" }}
         />
       </div>
 
-      {/* LOGO SECTION */}
+      {/* Logo */}
       <div className="logo">
         <img
           src="/assets/ulvoxo-logo.png"
@@ -91,49 +74,100 @@ export default function Header() {
         />
       </div>
 
-      {/* AUTH AREA */}
-      <div className="auth-area">
-        {user ? (
+      {/* Right side: auth area */}
+      <div className="auth-area relative">
+        {!user ? (
           <button
-            className="profile-button"
-            onClick={() => {
-              try {
-                sessionStorage.setItem("ulvoxoOpenProfileDetails", "1");
-              } catch {}
-              setShowLogin(true);
-            }}
-            aria-label="Open profile menu"
-          >
-            {user.photoURL ? (
-              <img src={user.photoURL} alt="User avatar" className="avatar" />
-            ) : (
-              <div className="avatar-fallback" aria-hidden="true">
-                {getInitial(user.displayName)}
-              </div>
-            )}
-          </button>
-        ) : (
-          <button
-            type="button"
             className="login-animation"
-            onClick={() => setShowLogin(true)}
+            onClick={() => setIsLoginOpen(true)}
             aria-label="Open login"
           >
             <Lottie animationData={loginAnimation} loop autoplay />
-            <span className="login-hint" aria-hidden="true">
-              Login Here →
-            </span>
+            <span className="login-hint">Login Here →</span>
           </button>
+        ) : (
+          <div className="relative" ref={dropdownRef}>
+            {/* Profile button — avatar only (no name beside it) */}
+            <button
+              className="profile-button"
+              onClick={() => setShowDropdown((p) => !p)}
+              aria-haspopup="menu"
+              aria-expanded={showDropdown}
+              aria-label="Open profile menu"
+            >
+              {user.photoURL ? (
+                <img
+                  src={user.photoURL}
+                  alt="User avatar"
+                  className="avatar"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              ) : (
+                <div className="avatar-fallback">{getInitial(user.displayName)}</div>
+              )}
+            </button>
+
+            {/* Dropdown */}
+            {showDropdown && (
+              <div className="profile-dropdown" role="menu">
+                <div className="p-3 border-b">
+                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    {user.photoURL ? (
+                      <img
+                        src={user.photoURL}
+                        alt="profile"
+                        style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }}
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                        }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: "50%",
+                          display: "grid",
+                          placeItems: "center",
+                          background: "var(--color-primary)",
+                          color: "#fff",
+                          fontWeight: "700",
+                        }}
+                      >
+                        {getInitial(user.displayName)}
+                      </div>
+                    )}
+                    <div>
+                      <p style={{ fontWeight: 600 }}>
+                        {user.displayName || "Not specified"}
+                      </p>
+                      <p style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                        {user.email || "Not specified"}
+                      </p>
+                      <p style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+                        {user.phoneNumber || "Not specified"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <button onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         )}
       </div>
 
-      {/* LOGIN MODAL (PORTAL-STYLE OVERLAY) */}
-      {showLogin && (
+      {/* Login Modal */}
+      {isLoginOpen && (
         <LoginModal
-          onClose={() => setShowLogin(false)}
-          onLogin={handleLogin}
+          onClose={() => setIsLoginOpen(false)}
+          onLogin={handleLoginSuccess}
           onLogout={handleLogout}
-          user={user} // pass current user from Header
         />
       )}
     </header>

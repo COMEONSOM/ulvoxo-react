@@ -1,13 +1,13 @@
 /* ============================================================
    LOGIN MODAL (SCOPED STYLES) — 2026 READY
-   CONSUMES GLOBAL TOKENS FROM :root (Header.css). FALLBACKS ADDED.
+   MATCHES LoginModal.jsx (success + countdown + redirect)
    ============================================================ */
 
 /* TOKEN MAPPINGS (SAFETY FALLBACKS IF GLOBALS CHANGE) */
 :root {
-  --lm-bg: var( #ffffff3b);
-  --lm-overlay: rgba(20, 20, 20, 0.4);
-  --lm-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  --lm-bg: #fffffffa;
+  --lm-overlay: rgba(20, 20, 20, 0.45);
+  --lm-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 
   --lm-text: var(--color-text-dark, #111111);
   --lm-subtext: #555;
@@ -18,21 +18,21 @@
   --lm-danger-hover: #c62828;
   --lm-success: #2e7d32;
 
-  --lm-radius-card: 16px;
+  --lm-radius-card: 18px;
   --lm-radius-pill: 30px;
 
   --lm-font: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 
-  --lm-fs-xs: var(--font-size-xs, 0.75rem);
-  --lm-fs-sm: var(--font-size-sm, 0.875rem);
-  --lm-fs-md: var(--font-size-md, 1rem);
-  --lm-fs-lg: var(--font-size-lg, 1.125rem);
+  --lm-fs-xs: 0.75rem;
+  --lm-fs-sm: 0.875rem;
+  --lm-fs-md: 1rem;
+  --lm-fs-lg: 1.125rem;
   --lm-fs-xl: 1.6rem;
 
-  --lm-space-xs: var(--space-xs, 0.5rem);
-  --lm-space-sm: var(--space-sm, 0.75rem);
-  --lm-space-md: var(--space-md, 1rem);
-  --lm-space-lg: var(--space-lg, 1.5rem);
+  --lm-space-xs: 0.5rem;
+  --lm-space-sm: 0.75rem;
+  --lm-space-md: 1rem;
+  --lm-space-lg: 1.5rem;
 }
 
 /* ============================================================
@@ -48,7 +48,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2000; /* ABOVE HEADER (100) */
+  z-index: 2000;
 }
 
 .modal-container {
@@ -63,12 +63,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transition: transform 0.35s ease, opacity 0.35s ease;
   font-family: var(--lm-font);
   text-align: center;
+  animation: fadeIn 0.45s ease;
 }
 
-/* LOADER VARIANT (REUSES CONTAINER) */
+/* LOADER VARIANT */
 .modal-loader {
   min-height: 160px;
   display: grid;
@@ -84,13 +84,13 @@
   height: 40px;
   background-color: var(--lm-primary);
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 700;
   border: none;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
   cursor: pointer;
   transition: background-color 0.25s ease, transform 0.2s ease;
   z-index: 10;
@@ -99,7 +99,7 @@
 .modal-close:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
 /* ============================================================
-   TYPOGRAPHY (SCOPED TO MODAL)
+   TYPOGRAPHY
    ============================================================ */
 .modal-container h2 {
   margin-bottom: 1rem;
@@ -115,7 +115,10 @@
   color: var(--lm-text);
 }
 
-.modal-container p { font-size: var(--lm-fs-md); }
+.modal-container p {
+  font-size: var(--lm-fs-md);
+  margin: 0.3rem 0;
+}
 
 /* ============================================================
    OAUTH BUTTONS
@@ -134,18 +137,16 @@
   font-size: var(--lm-fs-md);
   color: #fff;
 }
-.oauth-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 .oauth-btn:hover { transform: translateY(-1px); }
+.oauth-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
-/* PROVIDER COLORS */
+/* Provider colors */
 .oauth-btn.google   { background-color: #db4437; }
-.oauth-btn.google:hover   { filter: brightness(0.95); }
-
 .oauth-btn.facebook { background-color: #4267b2; }
-.oauth-btn.facebook:hover { filter: brightness(0.95); }
-
 .oauth-btn.github   { background-color: #24292e; }
-.oauth-btn.github:hover   { filter: brightness(0.95); }
+.oauth-btn.google:hover,
+.oauth-btn.facebook:hover,
+.oauth-btn.github:hover { filter: brightness(0.95); }
 
 /* ============================================================
    SUCCESS / ERROR STATES
@@ -168,6 +169,7 @@
 .success-subtext {
   color: var(--lm-subtext);
   font-size: var(--lm-fs-sm);
+  margin-top: 0.4rem;
 }
 
 .error-text {
@@ -195,10 +197,9 @@
   transition: transform 0.12s ease, background 0.2s ease;
 }
 .retry-btn:hover { background-color: var(--lm-primary-hover); transform: translateY(-1px); }
-.retry-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
 /* ============================================================
-   PROFILE SUMMARY (COMPACT)
+   PROFILE SUMMARY
    ============================================================ */
 .profile-summary {
   text-align: center;
@@ -209,23 +210,17 @@
 }
 .profile-summary:hover { background: #f5f5f5; }
 
-.profile-summary-text p {
-  margin: 0.4rem 0;
-  font-weight: 600;
-}
-.profile-summary-text small {
-  color: var(--lm-subtext);
-  font-size: var(--lm-fs-sm);
-}
+.profile-summary-text p { font-weight: 600; }
+.profile-summary-text small { color: var(--lm-subtext); font-size: var(--lm-fs-sm); }
 
-/* AVATAR SIZES (SHARED WITH HEADER NAMING) */
+/* Avatars */
 .avatar,
 .avatar-fallback {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  object-fit: contain;   /* ✅ prevent cropping */
-  background: #f9fafb;  /* neutral background */
+  object-fit: contain;
+  background: #f9fafb;
   margin: 0 auto 0.5rem auto;
   display: flex;
   align-items: center;
@@ -238,17 +233,12 @@
   font-weight: 800;
 }
 
-/* ============================================================
-   PROFILE DETAILS
-   ============================================================ */
-.profile-details { text-align: center; }
-
 .avatar-lg,
 .avatar-fallback-lg {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  object-fit: contain;   /* ✅ prevent cropping */
+  object-fit: contain;
   background: #f9fafb;
   margin: 0 auto 1rem auto;
   display: flex;
@@ -262,6 +252,14 @@
   font-weight: 800;
 }
 
+/* Profile details */
+.profile-details {
+  text-align: center;
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: var(--lm-shadow);
+}
 .profile-field {
   font-size: var(--lm-fs-md);
   color: var(--lm-text);
@@ -285,12 +283,18 @@
   transition: transform 0.12s ease, background 0.2s ease;
 }
 .logout-btn:hover { background-color: var(--lm-danger-hover); transform: translateY(-1px); }
-.logout-btn:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
 
 /* ============================================================
    LOGOUT CONFIRMATION
    ============================================================ */
-.logout-confirmation { text-align: center; animation: fadeIn 0.35s ease; }
+.logout-confirmation {
+  text-align: center;
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: var(--lm-shadow);
+  animation: fadeIn 0.35s ease;
+}
 
 .confirmation-actions {
   margin-top: 1rem;
@@ -310,12 +314,9 @@
   transition: transform 0.12s ease, filter 0.2s ease;
 }
 .btn-yes { background-color: var(--lm-danger); color: #fff; }
-.btn-yes:hover { filter: brightness(0.95); transform: translateY(-1px); }
-.btn-yes:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
-
-.btn-no { background-color: #e0e0e0; color: #111; }
-.btn-no:hover { filter: brightness(0.97); transform: translateY(-1px); }
-.btn-no:focus-visible { outline: 2px solid var(--lm-primary); outline-offset: 2px; }
+.btn-no  { background-color: #e0e0e0; color: #111; }
+.btn-yes:hover,
+.btn-no:hover { filter: brightness(0.95); transform: translateY(-1px); }
 
 /* ============================================================
    ANIMATIONS
@@ -326,13 +327,13 @@
 }
 
 /* ============================================================
-   REDUCED MOTION SUPPORT
+   REDUCED MOTION
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  .modal-container { transition: none; }
+  .modal-container,
   .oauth-btn,
   .logout-btn,
   .btn-yes,
   .btn-no,
-  .retry-btn { transition: none; }
+  .retry-btn { transition: none !important; }
 }
