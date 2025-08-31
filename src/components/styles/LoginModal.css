@@ -5,7 +5,7 @@
 
 /* TOKEN MAPPINGS (SAFETY FALLBACKS IF GLOBALS CHANGE) */
 :root {
-  --lm-bg: #fffffffa;
+  --lm-bg: #ffffff72;
   --lm-overlay: rgba(20, 20, 20, 0.45);
   --lm-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 
@@ -105,7 +105,7 @@
   margin-bottom: 1rem;
   font-weight: 700;
   font-size: var(--lm-fs-xl);
-  color: var(--lm-primary);
+  color: #000;
 }
 
 .modal-container h3 {
@@ -255,16 +255,13 @@
 /* Profile details */
 .profile-details {
   text-align: center;
-  background: #fff;
   border-radius: 14px;
-  padding: 1.2rem;
-  box-shadow: var(--lm-shadow);
 }
 .profile-field {
   font-size: var(--lm-fs-md);
   color: var(--lm-text);
   font-weight: 600;
-  margin: 0.6rem 0;
+  margin: 0.4rem 0;
 }
 
 /* ============================================================
