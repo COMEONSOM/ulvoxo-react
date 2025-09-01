@@ -1,53 +1,72 @@
+// ============================================================
+// ABOUTCOMPANY COMPONENT (2026 READY, DEV-FRIENDLY)
+// ORIGINAL CONTENT KEPT, STRUCTURE + PERFORMANCE IMPROVED
+// EXTRA CHANGE: "NEW" BADGE REPLACED WITH LOTTIE ANIMATION
+// ============================================================
+
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lottie from "lottie-react";
+
 import backgroundAnimation from "../animations/background.json"; // Background animation
 import bulletAnimation from "../animations/bulletpoints.json"; // Bullet animation
-import "./styles/AboutCompany.css";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
-import { Bar } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import newTagAnimation from "../animations/newtaganimation.json"; // "NEW" Tag animation (top-right of card)
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+import "./styles/AboutCompany.css";
+import GrowthChart from "./chunks/GrowthChart"; // Extracted Growth Chart Component
+
+// Register GSAP plugin
 gsap.registerPlugin(ScrollTrigger);
 
+// ============================================================
+// STATIC DATA (WORK AREAS + HIGHLIGHTS)
+// ============================================================
 const workAreas = [
   {
     title: "ULVOXO FINANCE",
     link: "https://www.xfactorial.online/",
     desc: [
-      ["What it is:", "A comprehensive suite of investor tools—market trackers, portfolio analyzers, risk-assessment calculators, and more."],
+      [
+        "What it is:",
+        "A comprehensive suite of investor tools—market trackers, portfolio analyzers, risk-assessment calculators, and more.",
+      ],
       ["Access:", "No ads! Login required to access some tools."],
-      ["Why it exists:", "To remove barriers for amateur and professional investors alike. Whether you’re just starting or fine-tuning a multi-asset portfolio, ULVOXO FINANCE gives you the data and insights you need—at zero cost and with zero ads."],
+      [
+        "Why it exists:",
+        "To remove barriers for amateur and professional investors alike. Whether you’re just starting or fine-tuning a multi-asset portfolio, ULVOXO FINANCE gives you the data and insights you need—at zero cost and with zero ads.",
+      ],
     ],
   },
   {
     title: "ULVOXO VERSITY",
     link: "https://xfactorialdi.web.app/",
     desc: [
-      ["What it is:", "A financial-literacy and investing-education platform for MSMEs and college students."],
+      [
+        "What it is:",
+        "A financial-literacy and investing-education platform for MSMEs and college students.",
+      ],
       ["Access:", "No ads! Visit to know more!"],
-      ["Why it exists:", "We believe high-quality, in-depth courses shouldn’t break the bank. ULVOXO courses are priced at a nominal fee—just enough to cover our operational costs, with no ads or hidden charges. During Diwali, we offer a one-time special discount to spread awareness and welcome more learners."],
+      [
+        "Why it exists:",
+        "We believe high-quality, in-depth courses shouldn’t break the bank. ULVOXO courses are priced at a nominal fee—just enough to cover our operational costs, with no ads or hidden charges. During Diwali, we offer a one-time special discount to spread awareness and welcome more learners.",
+      ],
     ],
   },
   {
     title: "ULVOXO SUPERTOOLS",
     link: " https://comeonsom.github.io/Ulvoxo-Supertools/",
     desc: [
-      ["What it is:", "The ultimate AI aggregator platform—bringing together every useful AI websites you need."],
+      [
+        "What it is:",
+        "The ultimate AI aggregator platform—bringing together every useful AI websites you need.",
+      ],
       ["Access:", "Completely free no ads!"],
-      ["Why it exists:", "To save you time hunting for the best AI resources. ULVOXO TOOLS organizes it all in one place."],
+      [
+        "Why it exists:",
+        "To save you time hunting for the best AI resources. ULVOXO TOOLS organizes it all in one place.",
+      ],
     ],
   },
   {
@@ -56,7 +75,10 @@ const workAreas = [
     desc: [
       ["What it is:", "Updates for ITI, Diploma, B.Tech students."],
       ["Access:", "Completely free no ads!"],
-      ["Why it exists:", "It is a single place for ITI, Diploma, and B.Tech students to find useful websites, study materials, and government job updates. It’s completely free, has no ads. Just follow Ulvoxo—nothing else needed."],
+      [
+        "Why it exists:",
+        "It is a single place for ITI, Diploma, and B.Tech students to find useful websites, study materials, and government job updates. It’s completely free, has no ads. Just follow Ulvoxo—nothing else needed.",
+      ],
     ],
   },
 ];
@@ -80,60 +102,36 @@ const highlights = [
   },
 ];
 
-const growthData = {
-  labels: ["2022", "2023", "2024"],
-  datasets: [
-    {
-      label: "Users",
-      data: [100, 500, 2000],
-      backgroundColor: "#10b981",
-    },
-  ],
-};
-
-function ParticlesBackground() {
-  const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine);
-  }, []);
-
-  const isMobile = window.innerWidth < 768;
-
-  return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={{
-        fullScreen: false,
-        background: { color: "#ffffff" },
-        particles: {
-          number: {
-            value: isMobile ? 25 : 60,
-            density: { enable: true, area: 800 },
-          },
-          move: { enable: true, speed: isMobile ? 1 : 2 },
-          size: { value: 3 },
-          color: { value: "#10b981" },
-        },
-        detectRetina: true,
-      }}
-    />
-  );
-}
-
+// ============================================================
+// MAIN COMPONENT
+// ============================================================
 export default function AboutCompany() {
   const sectionRef = useRef(null);
   const workGridRef = useRef(null);
-  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
+  // Responsive state (desktop vs mobile)
+  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 768);
+
+  // Handle window resize with throttling
   useEffect(() => {
+    let resizeTimeout;
     const handleResize = () => {
-      setIsDesktop(window.innerWidth >= 768);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        setIsDesktop(window.innerWidth >= 768);
+      }, 150);
     };
 
     window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
+  // GSAP animations for headings + cards
+  useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray(".work-card");
+
+      // Animate each card on scroll
       cards.forEach((card, i) => {
         gsap.fromTo(
           card,
@@ -153,6 +151,7 @@ export default function AboutCompany() {
         );
       });
 
+      // Animate heading
       gsap.from(".about-heading", {
         x: -60,
         opacity: 0,
@@ -164,27 +163,30 @@ export default function AboutCompany() {
       });
     }, workGridRef);
 
-    return () => {
-      ctx.revert();
-      window.removeEventListener("resize", handleResize);
-    };
+    return () => ctx.revert();
   }, []);
 
+  // ============================================================
+  // JSX Render
+  // ============================================================
   return (
     <section ref={sectionRef} className="about-company-section">
-      <div className="particles-bg">
-        <ParticlesBackground />
-      </div>
-
+      {/* WELCOME MESSAGE */}
       <motion.p
         className="welcome-message"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Welcome to <strong>ULVOXO</strong>, the tech solutions startup dedicated to empowering micro, small, and medium enterprises (MSMEs)—and the next generation of entrepreneurs—with cutting-edge digital tools and financial education. Founded by a passionate team of six, our mission is simple: to make India financially literate and technologically self-sufficient, one MSME at a time.
+        Welcome to <strong>ULVOXO</strong>, the tech solutions startup dedicated
+        to empowering micro, small, and medium enterprises (MSMEs)—and the next
+        generation of entrepreneurs—with cutting-edge digital tools and
+        financial education. Founded by a passionate team of six, our mission is
+        simple: to make India financially literate and technologically
+        self-sufficient, one MSME at a time.
       </motion.p>
 
+      {/* SECTION HEADING */}
       <motion.h2
         className="about-heading"
         initial={{ opacity: 0, y: 30 }}
@@ -194,13 +196,16 @@ export default function AboutCompany() {
         Our Different Work Areas
       </motion.h2>
 
+      {/* WORK AREAS GRID */}
       <div ref={workGridRef} className="work-grid">
+        {/* Background animation only for desktop */}
         {isDesktop && (
           <div className="work-area-background-animation">
             <Lottie animationData={backgroundAnimation} loop autoplay />
           </div>
         )}
 
+        {/* Dynamically render all work areas */}
         {workAreas.map(({ title, desc, link }, index) => (
           <motion.a
             key={index}
@@ -212,11 +217,25 @@ export default function AboutCompany() {
             transition={{ type: "spring", stiffness: 280 }}
           >
             <div className="relative">
-              
+              {/* NEW TAG LOTTIE ANIMATION */}
               {title === "ULVOXO UPDATES" && (
-                <div className="new-badge">NEW</div>
+                <div className="new-badge-animation">
+                  <Lottie
+                    animationData={newTagAnimation}
+                    loop
+                    autoplay
+                    style={{
+                      width: 60,
+                      height: 60,
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                    }}
+                  />
+                </div>
               )}
 
+              {/* CARD CONTENT */}
               <h3>{title}</h3>
               {desc.map(([label, val], i) => (
                 <p key={i}>
@@ -227,9 +246,9 @@ export default function AboutCompany() {
             </div>
           </motion.a>
         ))}
-
       </div>
 
+      {/* WHY ULVOXO SECTION */}
       <motion.div
         className="why-ulvoxo"
         initial={{ opacity: 0, y: 40 }}
@@ -246,6 +265,7 @@ export default function AboutCompany() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
             >
+              {/* Bullet Lottie animation */}
               <div className="bullet-animation">
                 <Lottie animationData={bulletAnimation} loop autoplay />
               </div>
@@ -257,7 +277,11 @@ export default function AboutCompany() {
         </div>
 
         <div className="why-ulvoxo-final">
-          At <strong>ULVOXO</strong>, we believe that empowering MSMEs with technology and financial know-how can transform India’s economic landscape. Thank you for trusting us on your journey to growth and innovation. We are committed to your success—today, tomorrow, and beyond.
+          At <strong>ULVOXO</strong>, we believe that empowering MSMEs with
+          technology and financial know-how can transform India’s economic
+          landscape. Thank you for trusting us on your journey to growth and
+          innovation. We are committed to your success—today, tomorrow, and
+          beyond.
         </div>
 
         <p className="join-ulvoxo">
@@ -265,17 +289,8 @@ export default function AboutCompany() {
         </p>
       </motion.div>
 
-      <motion.div
-        className="growth-chart"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h3>Our Growth</h3>
-        <div style={{ maxWidth: "500px", margin: "0 auto" }}>
-          <Bar data={growthData} />
-        </div>
-      </motion.div>
+      {/* GROWTH CHART SECTION */}
+      <GrowthChart />
     </section>
   );
 }
