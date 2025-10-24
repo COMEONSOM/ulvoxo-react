@@ -14,7 +14,7 @@ import "./styles/Navbar.css"; // Navbar specific styles
 // ✅ Navigation items list (easy to update in future)
 const navItems = [
   { label: " Ulvoxo Finance", href: "https://www.xfactorial.online/" },
-  { label: " Ulvoxo Versity", href: "https://xfactorialdi.web.app/" },
+  { label: " Ulvoxo Versity", href: "https://openroot-classes.web.app/" },
   { label: " Ulvoxo SuperTools", href: "https://comeonsom.github.io/Ulvoxo-Supertools/" },
   { label: " Ulvoxo Updates", href: "https://comeonsom.github.io/Ulvoxo-Update/" },
 ];
