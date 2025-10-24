@@ -1,16 +1,24 @@
 # ======================================
 # Node.js & React (Create React App / Vite)
 # ======================================
+# Dependencies
 node_modules/
-build/
+
+# Build output
 dist/
+build/
+
 .cache/
 .eslintcache
-*.log
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# System files
+.DS_Store
+Thumbs.db
 
 
 # ======================================
@@ -21,10 +29,3 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
-
-# ======================================
-# OS specific
-# ======================================
-.DS_Store
-Thumbs.db
-

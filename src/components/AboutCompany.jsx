@@ -40,8 +40,8 @@ const workAreas = [
     ],
   },
   {
-    title: "ULVOXO VERSITY",
-    link: "https://xfactorialdi.web.app/",
+    title: "Openroot Classes",
+    link: "https://openroot-classes.web.app/",
     desc: [
       [
         "What it is:",
@@ -70,14 +70,14 @@ const workAreas = [
     ],
   },
   {
-    title: "ULVOXO UPDATES",
+    title: "Helping Hand",
     link: "https://comeonsom.github.io/Ulvoxo-Update/",
     desc: [
-      ["What it is:", "Updates for ITI, Diploma, B.Tech students."],
+      ["What it is:", "Important websites and job updates for ITI, Diploma, UG/PG students."],
       ["Access:", "Completely free no ads!"],
       [
         "Why it exists:",
-        "It is a single place for ITI, Diploma, and B.Tech students to find useful websites, study materials, and government job updates. It’s completely free, has no ads. Just follow Ulvoxo—nothing else needed.",
+        "It is a single place for ITI, Diploma, and UG/PG students to find useful websites, study materials, and government job updates. It’s completely free, has no ads. Just follow Ulvoxo—nothing else needed.",
       ],
     ],
   },
