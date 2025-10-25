@@ -98,7 +98,7 @@ const releasedSoftwares = Object.freeze([
   },
   {
     name: "Helping Hand",
-    href: "https://comeonsom.github.io/Ulvoxo-Update/",
+    href: "https://comeonsom.github.io/openroot-helping-hand/",
     icon: Icons.helpingHand,
   },
 ]);

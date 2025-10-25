@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import "./styles/Header.css";
 import LoginModal from "./LoginModal";
 import Lottie from "lottie-react";
-import headerBackground from "../animations/headerbackground.json";
 import loginAnimation from "../animations/login.json";
 
 import { auth } from "../lib/firebase";
