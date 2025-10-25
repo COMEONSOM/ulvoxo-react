@@ -6,7 +6,7 @@
   /* BRAND COLORS */
   --color-primary: #1d4ed8;            /* PRIMARY BLUE */
   --color-primary-hover: #2563eb;      /* DARKER BLUE HOVER */
-  --color-white: #ffffff;              /* PURE WHITE */
+  --color-white: #000000;              /* PURE WHITE */
   --color-border: #e5e7eb;             /* LIGHT GRAY */
   --color-text-dark: #111111;          /* DARK TEXT */
 
@@ -31,6 +31,14 @@
   /* TRANSITIONS */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.35s ease;
+
+  /* LOGO WIDTH PER DEVICE */
+  --logo-width-mobile: 100px;      /* SMALL PHONES */
+  --logo-width-tablet: 120px;      /* TABLETS */
+  --logo-width-laptop: 140px;      /* Laptops */
+  --logo-width-desktop: 160px;     /* Desktop monitors */
+  --logo-width-tv: 200px;          /* TV / large screens */
+  --logo-width-folding: 130px;     /* Foldable devices */
 }
 
 /* ============================================================
@@ -60,12 +68,11 @@
 }
 
 .logo-img {
-  max-width: 120px;
+  width: var(--logo-width-laptop); /* DEFAULT FOR LAPTOP / MEDIUM SCREENS */
   height: auto;
-  z-index: 100;
   object-fit: contain;
-  transition: transform var(--transition-normal);
   user-select: none;
+  transition: transform 0.3s ease;
 }
 
 .logo-img:hover { transform: scale(1.03); }
@@ -74,31 +81,6 @@
 @media (max-width: 768px) { .logo-img { max-width: 120px; } }
 @media (max-width: 480px) { .logo-img { max-width: 100px; } }
 
-/* ============================================================
-   HEADER BACKGROUND LOTTIE — RESPONSIVE, NON-STRETCH
-   ============================================================ */
-.header {
-  position: relative;
-  overflow: hidden;
-}
-
-.header-bg {
-  position: absolute;
-  top: 80%;
-  left: 60%;
-  width: 120%;  /* allow some overflow for cover effect */
-  height: auto;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  pointer-events: none;
-}
-
-.header-bg canvas,
-.header-bg svg {
-  width: 100% !important;
-  height: auto !important;  /* keep aspect ratio */
-  max-height: none !important;
-}
 
 /* ============================================================
    AUTH AREA
@@ -181,4 +163,34 @@
 @media (prefers-reduced-motion: reduce) {
   .logo-img,
   .login-animation { transition: none; }
+}
+/* SMALL PHONES / MOBILE */
+@media (max-width: 480px) {
+  .logo-img { width: var(--logo-width-mobile); }
+}
+
+/* TABLETS */
+@media (min-width: 481px) and (max-width: 768px) {
+  .logo-img { width: var(--logo-width-tablet); }
+}
+
+/* LAPTOPS / DEFAULT ALREADY SET */
+/* You can override if needed for specific range */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .logo-img { width: var(--logo-width-laptop); }
+}
+
+/* DESKTOP LARGE MONITORS */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .logo-img { width: var(--logo-width-desktop); }
+}
+
+/* TV / ULTRA WIDE */
+@media (min-width: 1441px) {
+  .logo-img { width: var(--logo-width-tv); }
+}
+
+/* FOLDING PHONES */
+@media (max-width: 600px) and (orientation: landscape) {
+  .logo-img { width: var(--logo-width-folding); }
 }

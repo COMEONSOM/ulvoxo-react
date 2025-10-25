@@ -19,10 +19,10 @@ export default function Footer() {
     <footer ref={footerRef} className="footer-container">
       <div className="footer-content">
         <p>
-          <a href="https://www.xfactorial.online/Other-files/terms.html">Terms and Conditions</a> |{" "}
-          <a href="https://www.xfactorial.online/Other-files/founder.html">Founder Details</a>
+          <a href="https://comeonsom.github.io/Ulvoxo-Update/other_files/terms.html">Terms and Conditions</a> |{" "}
+          <a href="https://comeonsom.github.io/Ulvoxo-Update/other_files/founder.html">Founder Details</a>
         </p>
-        <p>&copy; {new Date().getFullYear()} ULVOXO. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} OPENROOT. All rights reserved.</p>
       </div>
       <div className="footer-lottie">
         <Lottie animationData={footerAnim} loop={true} />

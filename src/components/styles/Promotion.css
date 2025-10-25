@@ -1,0 +1,84 @@
+/* ============================================================
+   PROMOTION COMPONENT STYLES — MINIMAL NAV + INFO PANEL
+   ============================================================ */
+
+.promotion-container {
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.promotion-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.promo-btn {
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.promo-btn:hover {
+  background: #3748c9;
+}
+
+/* ✅ FIXED OVERLAY ALWAYS ABOVE EVERYTHING */
+.about-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999; /* guaranteed top layer */
+}
+
+/* ✅ MODAL CONTENT BOX */
+.about-modal-content {
+  background: #fff;
+  color: #111;
+  max-width: 700px;
+  width: 90%;
+  border-radius: 16px;
+  padding: 2rem;
+  position: relative;
+  text-align: left;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  max-height: 85vh;
+}
+
+/* CLOSE BUTTON */
+.close-modal-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 1.6rem;
+  border: none;
+  background: transparent;
+  color: #444;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.close-modal-btn:hover {
+  transform: scale(1.2);
+}
+
+.about-company-promo {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  line-height: 1.7;
+  color: #1e293b;
+  font-size: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+

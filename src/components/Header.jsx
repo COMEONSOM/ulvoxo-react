@@ -27,21 +27,11 @@ export default function Header() {
 
   return (
     <header className="header" role="banner">
-      {/* Animated background */}
-      <div className="header-bg" aria-hidden="true">
-        <Lottie
-          animationData={headerBackground}
-          loop
-          autoplay
-          style={{ width: "100%", height: "100%" }}
-        />
-      </div>
-
       {/* Logo */}
       <div className="logo">
         <img
-          src="/assets/ulvoxo-logo.png"
-          alt="Ulvoxo Logo"
+          src="/assets/openroot-white-nobg.png"
+          alt="Openroot Logo"
           className="logo-img"
           draggable="false"
         />

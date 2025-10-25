@@ -8,6 +8,7 @@ import ContactFollow from "./components/ContactFollow";
 import Footer from "./components/Footer";
 import Loader from "./components/Loader";
 import './App.css';
+import Promotion from "./components/Promotion";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -22,12 +23,9 @@ export default function App() {
   }, []);
 
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
         <>
           <Header />
+          <Promotion/>
           <Navbar />
           <AboutCompany />
           <Elements />
@@ -35,6 +33,3 @@ export default function App() {
           <Footer />
         </>
       )}
-    </>
-  );
-}

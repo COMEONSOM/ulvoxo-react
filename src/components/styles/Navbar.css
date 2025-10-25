@@ -32,7 +32,7 @@
   /*  ANIMATIONS */
   --transition-fast: 0.2s ease;
   --transition-normal: 0.35s ease;
-  --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* MORE INTERACTIVE FEEL */
+  --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* ============================================================
@@ -42,11 +42,89 @@
   max-width: 100%;
   background-color: var(--background);
   padding: var(--space-lg) var(--space-sm);
-  border-top: 1px solid rgba(0, 0, 0, 0.05); /* SUBTLE BORDER FOR SEPARATION */
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   justify-content: center;
   position: relative;
   z-index: 10;
+}
+
+.navbar-content {
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* ============================================================
+    SECTION TITLES
+   ============================================================ */
+.navbar-title {
+  color: var(--text-main);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-sm);
+  padding-left: var(--space-sm);
+  border-left: 4px solid var(--primary);
+  display: inline-block;
+}
+
+.quick-links-title {
+  color: var(--primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  margin: var(--space-md) 0 var(--space-sm) var(--space-sm);
+}
+
+/* ============================================================
+    RELEASED SOFTWARES SECTION
+   ============================================================ */
+.released-softwares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+  padding: 0 var(--space-sm);
+  justify-content: center;
+}
+
+.software-btn {
+  background: var(--card-bg);
+  border: none;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-default);
+  width: 110px;
+  height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-main);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: transform var(--transition-normal),
+              box-shadow var(--transition-fast),
+              background var(--transition-fast);
+}
+
+.software-btn:hover {
+  background: linear-gradient(135deg, var(--primary-light), #a3b6ff);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-6px) scale(1.05);
+  color: #fff;
+}
+
+.software-icon {
+  margin-bottom: var(--space-xs);
+  transition: transform var(--transition-bounce);
+}
+
+.software-btn:hover .software-icon {
+  transform: rotate(10deg) scale(1.1);
+}
+
+.software-name {
+  font-size: 0.85rem;
+  text-align: center;
 }
 
 /* ============================================================
@@ -54,34 +132,30 @@
    ============================================================ */
 .nav-container {
   display: flex;
-  flex-wrap: wrap;              /* WRAPS ON SMALL SCREENS */
-  justify-content: center;      /* CENTER ALL ITEMS */
-  gap: var(--space-md);         /* CONSISTENT GAP BETWEEN ITEMS */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-md);
   padding: 0 var(--space-sm);
   width: 100%;
-  max-width: 1200px;            /* LIMIT MAX WIDTH ON LARGE SCREENS */
+  max-width: 1200px;
 }
 
 /* ============================================================
     NAV ITEM (CARD-STYLE BUTTONS)
    ============================================================ */
 .nav-band {
-  flex: 1 1 280px;                  /* FLEXIBLE SIZE WITH MIN 280PX */
-  max-width: 280px;                 /* PREVENT TOO LARGE */
+  flex: 1 1 280px;
+  max-width: 280px;
   padding: var(--space-sm) var(--space-md);
-  background: var(--card-bg);       /* GRADIENT BACKGROUND */
+  background: var(--card-bg);
   border-radius: 1rem;
   box-shadow: var(--shadow-default);
   cursor: pointer;
   overflow: hidden;
-
-  /* FLEX TO CENTER TEXT */
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-
-  /* INTERACTIVE ANIMATIONS */
   transition: transform var(--transition-normal),
               box-shadow var(--transition-fast),
               background-color var(--transition-fast);
@@ -92,7 +166,7 @@
 .nav-band:focus {
   background: var(--primary-light);
   box-shadow: var(--shadow-hover);
-  transform: translateY(-4px) scale(1.03); /* SLIGHT POP EFFECT */
+  transform: translateY(-4px) scale(1.03);
 }
 
 /* ============================================================
@@ -104,28 +178,26 @@
   color: var(--text-main);
   z-index: 2;
   user-select: none;
-  pointer-events: none;   /* CLICK IS HANDLED BY PARENT LI */
+  pointer-events: none;
   display: inline-flex;
   align-items: center;
   line-height: 0.99;
-  gap: 6px;               /* SPACE BETWEEN TEXT + ARROW */
+  gap: 6px;
   transition: color var(--transition-fast);
 }
 
-/*  ARROW STYLING */
 .nav-arrow {
-  font-size: 1.3em; /* SLIGHTLY BIGGER THAN TEXT */
+  font-size: 1.3em;
   transition: transform var(--transition-bounce), color var(--transition-fast);
   display: inline-block;
 }
 
-/* INTERACTIVE HOVER ON TEXT + ARROW */
 .nav-band:hover .nav-label {
   color: #fff;
 }
 
 .nav-band:hover .nav-arrow {
-  transform: translateX(4px); /* SLIDES ARROW RIGHT */
+  transform: translateX(4px);
   color: #fff;
 }
 
@@ -141,7 +213,7 @@
   object-fit: cover;
   opacity: 0.2;
   z-index: 1;
-  pointer-events: none; /* ENSURE CLICKS PASS THROUGH */
+  pointer-events: none;
 }
 
 /* ============================================================
@@ -158,6 +230,15 @@
   .nav-label {
     font-size: var(--font-size-sm);
   }
+
+  .software-btn {
+    width: 90px;
+    height: 90px;
+  }
+
+  .software-name {
+    font-size: 0.75rem;
+  }
 }
 
 /* TABLETS (TWO PER ROW) */
@@ -169,11 +250,15 @@
   .nav-label {
     font-size: var(--font-size-md);
   }
+
+  .released-softwares {
+    justify-content: center;
+  }
 }
 
 /* DESKTOPS (UP TO FOUR PER ROW) */
 @media (min-width: 1025px) {
   .nav-container {
-    grid-template-columns: repeat(4, 1fr); /* exactly 4 per row */
+    grid-template-columns: repeat(4, 1fr);
   }
 }
